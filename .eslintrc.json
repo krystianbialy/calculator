@@ -3,8 +3,8 @@
     "plugins": ["prettier"],
     "rules": {
         "prettier/prettier": "warn",
-        "func-names":"off",
-        "no-restricted-globals":"off"
+        "default-case": "off",
+        "no-eval":"off"
     },
     "parserOptions": {
         "ecmaVersion": 2015,

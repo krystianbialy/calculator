@@ -21,6 +21,8 @@ var outputOperationValue = document.getElementById(
 var displayValue = 0;
 var pendingValue;
 var calaculationsZone = [];
+var mathematicalOperation;
+var resultOfTheAction;
 
 let loadDisplayValue = () => {
   outputOperationValue.innerHTML = displayValue;
@@ -46,16 +48,13 @@ let performOperation = itemClicked => {
     case '+':
       pendingValue = displayValue;
       displayValue = 0;
-      outputOperationValue.innerHTML = displayValue;
       calaculationsZone.push(pendingValue);
       calaculationsZone.push('+');
-      console.log(calaculationsZone);
       break;
 
     case '-':
       pendingValue = displayValue;
       displayValue = 0;
-      outputOperationValue.innerHTML = displayValue;
       calaculationsZone.push(pendingValue);
       calaculationsZone.push('-');
       break;
@@ -63,7 +62,6 @@ let performOperation = itemClicked => {
     case '*':
       pendingValue = displayValue;
       displayValue = 0;
-      outputOperationValue.innerHTML = displayValue;
       calaculationsZone.push(pendingValue);
       calaculationsZone.push('*');
       break;
@@ -71,17 +69,14 @@ let performOperation = itemClicked => {
     case '/':
       pendingValue = displayValue;
       displayValue = 0;
-      outputOperationValue.innerHTML = displayValue;
       calaculationsZone.push(pendingValue);
       calaculationsZone.push('/');
       break;
 
     case '=':
       calaculationsZone.push(displayValue);
-      let test = calaculationsZone.join('').replace(/,/g, '.');
-      console.log(test);
-      let resultOfTheAction = eval(test);
-      console.log(resultOfTheAction);
+      mathematicalOperation = calaculationsZone.join('').replace(/,/g, '.');
+      resultOfTheAction = eval(mathematicalOperation);
       displayValue = resultOfTheAction + '';
       outputOperationValue.innerHTML = displayValue.replace('.', ',');
       calaculationsZone = [];
@@ -97,6 +92,13 @@ for (let i = 0; i < allOperators.length; i += 1) {
   allOperators[i].addEventListener('click', performOperation);
 }
 
+buttonComma.onclick = () => {
+  if (!displayValue.includes('.')) {
+    displayValue += '.';
+    outputOperationValue.innerHTML = displayValue.replace('.', ',');
+  }
+};
+
 buttonBackspace.onclick = () => {
   let displayValueLength = displayValue.length;
   displayValue = displayValue.slice(0, displayValueLength - 1);
@@ -105,17 +107,13 @@ buttonBackspace.onclick = () => {
   if (displayValue === '') {
     displayValue = 0;
     outputOperationValue.innerHTML = displayValue;
+  } else if (displayValue === '-') {
+    displayValue = 0;
+    outputOperationValue.innerHTML = displayValue;
   }
 };
 
 buttonClear.onclick = () => {
   displayValue = 0;
   outputOperationValue.innerHTML = displayValue;
-};
-
-buttonComma.onclick = () => {
-  if (!displayValue.includes(',')) {
-    displayValue += ',';
-    outputOperationValue.innerHTML = displayValue;
-  }
 };

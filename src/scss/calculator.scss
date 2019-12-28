@@ -1,10 +1,6 @@
 .calculator__container {
-  max-width: 500px;
-  padding: 15px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  max-width: 400px;
+  margin: 10px auto 0 auto;
 }
 
 .calculator__output-operation {
@@ -36,6 +32,7 @@
 
 @media (min-width: 400px) {
   .calculator__container {
+    padding: 15px;
     border: 2px solid grey;
   }
 }
