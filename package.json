@@ -36,6 +36,8 @@
   },
   "dependencies": {
     "filemanager-webpack-plugin": "^2.0.5",
-    "mdbootstrap": "^4.10.1"
+    "jquery": "^3.4.1",
+    "mdbootstrap": "^4.10.1",
+    "popper.js": "^1.16.0"
   }
 }

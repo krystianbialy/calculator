@@ -24,7 +24,22 @@
           id="calculator__input-operation-value-backspace">
           CE
         </button>
-        <button class="calculator__input-operation-value calculator__input-operation-value--number calculator__input-operation-value--new-line btn btn-blue-grey">
+        <button class="calculator__input-operation-value btn btn-primary dropdown-toggle px-3" data-toggle="dropdown">
+          <span>√</span>
+        </button>
+        <div class="root-dropdown-menu dropdown-menu">
+          <a class="root-dropdown-item dropdown-item" id="calculator__input-operation-value-square-root">
+            √
+          </a>
+          <div class="root-dropdown-divider dropdown-divider"></div>
+          <a class="root-dropdown-item dropdown-item" id="calculator__input-operation-value-root">
+            <sup>n</sup>√a
+          </a>
+        </div>
+        <button class="calculator__input-operation-value btn btn-primary" id="calculator__input-operation-value-power">
+          x<span><sup class="power-superscript">y</sup></span>
+        </button>
+        <button class="calculator__input-operation-value calculator__input-operation-value--number btn btn-blue-grey">
           1
         </button>
         <button class="calculator__input-operation-value calculator__input-operation-value--number btn btn-blue-grey">

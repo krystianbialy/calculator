@@ -24,10 +24,10 @@
   .calculator__input-operation-value {
     font-weight: bold;
   }
+}
 
-  .calculator__input-operation-value--new-line {
-    grid-column-start: 1;
-  }
+.power-superscript {
+  font-size: 9px;
 }
 
 @media (min-width: 400px) {
