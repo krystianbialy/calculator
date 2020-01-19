@@ -42,6 +42,13 @@ var saveX;
 var powerY;
 var powerCalculationZone = [];
 var powerON;
+var buttonValueSave;
+var buttonValueSavePush = 'yes';
+var pendingValuePush = 'no';
+var calculationsZoneClean = 'yes';
+var isEqualTo;
+var equalLength;
+var closingParenthesis = 'yes';
 
 let loadDisplayValue = () => {
   outputOperationValue.innerHTML = displayValue;
@@ -67,153 +74,223 @@ let powerVal = () => {
   }
 };
 
+let checkIncludes = () => {
+  if (isEqualTo === 'yes') {
+    displayValue = 0;
+    isEqualTo = 'no';
+  }
+};
+
 let updateOutputOperationValue = itemClicked => {
-  let buttonValue = itemClicked.target.innerText;
+  const buttonValue = itemClicked.target.innerText;
+
+  checkIncludes();
 
   if (displayValue === 0) {
     displayValue = '';
   }
 
   displayValue += buttonValue;
-  outputOperationValue.innerHTML = displayValue.replace('.', ',');
+  buttonValueSave = displayValue;
+  if (calculationsZoneClean === 'yes') {
+    calculationsZone = [];
+  }
+  displayValue = calculationsZone.join('') + displayValue;
+  if (calculationsZoneClean === 'cc') {
+    displayValue = buttonValueSave;
+    calculationsZone = [];
+    calculationsZone.push(displayValue);
+  }
+  outputOperationValue.innerHTML = displayValue
+    .replace(/\./g, ',')
+    .replace('=', '');
+  calculationsZoneClean = 'yes';
   rootVal();
   powerVal();
 };
 
 let performOperation = itemClicked => {
-  let operator = itemClicked.target.innerText;
+  const operator = itemClicked.target.innerText;
 
   switch (operator) {
     case '+':
-      if (powerON === 'yes') {
-        displayValue = 0;
-        calculationsZone.push(
-          Math.pow(
-            powerCalculationZone[0],
-            powerCalculationZone[powerCalculationZone.length - 1]
-          ) + ''
-        );
-        calculationsZone.push('+');
-        powerON = 'no';
-      } else if (squareRootON === 'yes') {
-        displayValue = 0;
-        calculationsZone.push('+');
-        squareRootON = 'no';
-      } else if (rootON === 'yes') {
-        displayValue = 0;
-        calculationsZone.push(
-          Math.pow(
-            rootCalculationZone[rootCalculationZone.length - 1],
-            1 / rootCalculationZone[0]
-          ) + ''
-        );
-        calculationsZone.push('+');
-        rootON = 'no';
-      } else {
-        pendingValue = displayValue;
-        displayValue = 0;
-        calculationsZone.push(pendingValue);
-        calculationsZone.push('+');
+      pendingValue = buttonValueSave;
+      if (pendingValuePush === 'yes') {
+        pendingValue = '';
       }
+      if (isEqualTo === 'yes') {
+        calculationsZone = [];
+        calculationsZone.push('+');
+        const valueSplit = displayValue.split('');
+        const slice = valueSplit.slice(-equalLength);
+        displayValue = slice.join('');
+        calculationsZone.splice(0, 0, displayValue);
+        displayValue = calculationsZone.join('').replace('=', '');
+        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
+      } else {
+        if (closingParenthesis === 'yes') {
+          calculationsZone.push(pendingValue);
+        }
+        calculationsZone.push('+');
+        displayValue = calculationsZone.join('');
+        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
+      }
+      displayValue = 0;
+      buttonValueSave = 0;
+      buttonValueSavePush = 'yes';
+      pendingValuePush = 'no';
+      calculationsZoneClean = 'no';
+      closingParenthesis = 'yes';
+
       break;
 
     case '-':
-      if (powerON === 'yes') {
-        displayValue = 0;
-        calculationsZone.push(
-          Math.pow(
-            powerCalculationZone[0],
-            powerCalculationZone[powerCalculationZone.length - 1]
-          ) + ''
-        );
-        calculationsZone.push('-');
-        powerON = 'no';
-      } else if (squareRootON === 'yes') {
-        displayValue = 0;
-        calculationsZone.push('-');
-        squareRootON = 'no';
-      } else if (rootON === 'yes') {
-        displayValue = 0;
-        calculationsZone.push(
-          Math.pow(
-            rootCalculationZone[rootCalculationZone.length - 1],
-            1 / rootCalculationZone[0]
-          ) + ''
-        );
-        calculationsZone.push('-');
-        rootON = 'no';
-      } else {
-        pendingValue = displayValue;
-        displayValue = 0;
-        calculationsZone.push(pendingValue);
-        calculationsZone.push('-');
+      pendingValue = buttonValueSave;
+      if (pendingValuePush === 'yes') {
+        pendingValue = '';
       }
+      if (isEqualTo === 'yes') {
+        calculationsZone = [];
+        calculationsZone.push('-');
+        const valueSplit = displayValue.split('');
+        const slice = valueSplit.slice(-equalLength);
+        displayValue = slice.join('');
+        calculationsZone.splice(0, 0, displayValue);
+        displayValue = calculationsZone.join('').replace('=', '');
+        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
+      } else {
+        if (closingParenthesis === 'yes') {
+          calculationsZone.push(pendingValue);
+        }
+        calculationsZone.push('-');
+        displayValue = calculationsZone.join('');
+        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
+      }
+      displayValue = 0;
+      buttonValueSave = 0;
+      buttonValueSavePush = 'yes';
+      pendingValuePush = 'no';
+      calculationsZoneClean = 'no';
+      closingParenthesis = 'yes';
+
       break;
 
     case '*':
-      if (powerON === 'yes') {
-        displayValue = 0;
-        calculationsZone.push(
-          Math.pow(
-            powerCalculationZone[0],
-            powerCalculationZone[powerCalculationZone.length - 1]
-          ) + ''
-        );
-        calculationsZone.push('*');
-        powerON = 'no';
-      } else if (squareRootON === 'yes') {
-        displayValue = 0;
-        calculationsZone.push('*');
-        squareRootON = 'no';
-      } else if (rootON === 'yes') {
-        displayValue = 0;
-        calculationsZone.push(
-          Math.pow(
-            rootCalculationZone[rootCalculationZone.length - 1],
-            1 / rootCalculationZone[0]
-          ) + ''
-        );
-        calculationsZone.push('*');
-        rootON = 'no';
-      } else {
-        pendingValue = displayValue;
-        displayValue = 0;
-        calculationsZone.push(pendingValue);
-        calculationsZone.push('*');
+      pendingValue = buttonValueSave;
+      if (pendingValuePush === 'yes') {
+        pendingValue = '';
       }
+      if (isEqualTo === 'yes') {
+        calculationsZone = [];
+        calculationsZone.push('*');
+        const valueSplit = displayValue.split('');
+        const slice = valueSplit.slice(-equalLength);
+        displayValue = slice.join('');
+        calculationsZone.splice(0, 0, displayValue);
+        displayValue = calculationsZone.join('').replace('=', '');
+        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
+      } else {
+        if (closingParenthesis === 'yes') {
+          calculationsZone.push(pendingValue);
+        }
+        calculationsZone.push('*');
+        displayValue = calculationsZone.join('');
+        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
+      }
+      displayValue = 0;
+      buttonValueSave = 0;
+      buttonValueSavePush = 'yes';
+      pendingValuePush = 'no';
+      calculationsZoneClean = 'no';
+      closingParenthesis = 'yes';
+
       break;
 
     case '/':
-      if (powerON === 'yes') {
-        displayValue = 0;
-        calculationsZone.push(
-          Math.pow(
-            powerCalculationZone[0],
-            powerCalculationZone[powerCalculationZone.length - 1]
-          ) + ''
-        );
-        calculationsZone.push('/');
-        powerON = 'no';
-      } else if (squareRootON === 'yes') {
-        displayValue = 0;
-        calculationsZone.push('/');
-        squareRootON = 'no';
-      } else if (rootON === 'yes') {
-        displayValue = 0;
-        calculationsZone.push(
-          Math.pow(
-            rootCalculationZone[rootCalculationZone.length - 1],
-            1 / rootCalculationZone[0]
-          ) + ''
-        );
-        calculationsZone.push('/');
-        rootON = 'no';
-      } else {
-        pendingValue = displayValue;
-        displayValue = 0;
-        calculationsZone.push(pendingValue);
-        calculationsZone.push('/');
+      pendingValue = buttonValueSave;
+      if (pendingValuePush === 'yes') {
+        pendingValue = '';
       }
+      if (isEqualTo === 'yes') {
+        calculationsZone = [];
+        calculationsZone.push('/');
+        const valueSplit = displayValue.split('');
+        const slice = valueSplit.slice(-equalLength);
+        displayValue = slice.join('');
+        calculationsZone.splice(0, 0, displayValue);
+        displayValue = calculationsZone.join('').replace('=', '');
+        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
+      } else {
+        if (closingParenthesis === 'yes') {
+          calculationsZone.push(pendingValue);
+        }
+        calculationsZone.push('/');
+        displayValue = calculationsZone.join('');
+        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
+      }
+      displayValue = 0;
+      buttonValueSave = 0;
+      buttonValueSavePush = 'yes';
+      pendingValuePush = 'no';
+      calculationsZoneClean = 'no';
+      closingParenthesis = 'yes';
+
+      break;
+
+    case '(':
+      pendingValue = buttonValueSave;
+      if (pendingValuePush === 'yes') {
+        pendingValue = '';
+      }
+      if (isEqualTo === 'yes') {
+        calculationsZone = [];
+        calculationsZone.push('(');
+        const valueSplit = displayValue.split('');
+        const slice = valueSplit.slice(-equalLength);
+        displayValue = slice.join('');
+        calculationsZone.splice(0, 0, displayValue);
+        displayValue = calculationsZone.join('').replace('=', '');
+        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
+      } else {
+        calculationsZone.push('(');
+        displayValue = calculationsZone.join('');
+        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
+      }
+      displayValue = 0;
+      buttonValueSave = 0;
+      buttonValueSavePush = 'no';
+      pendingValuePush = 'no';
+      calculationsZoneClean = 'no';
+
+      break;
+
+    case ')':
+      pendingValue = buttonValueSave;
+      if (pendingValuePush === 'yes') {
+        pendingValue = '';
+      }
+      if (isEqualTo === 'yes') {
+        calculationsZone = [];
+        calculationsZone.push(')');
+        const valueSplit = displayValue.split('');
+        const slice = valueSplit.slice(-equalLength);
+        displayValue = slice.join('');
+        calculationsZone.splice(0, 0, displayValue);
+        displayValue = calculationsZone.join('').replace('=', '');
+        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
+      } else {
+        calculationsZone.push(pendingValue);
+        calculationsZone.push(')');
+        displayValue = calculationsZone.join('');
+        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
+        closingParenthesis = 'no';
+      }
+      displayValue = 0;
+      buttonValueSave = 0;
+      buttonValueSavePush = 'no';
+      pendingValuePush = 'no';
+      calculationsZoneClean = 'no';
+
       break;
 
     case '=':
@@ -253,12 +330,31 @@ let performOperation = itemClicked => {
         calculationsZone = [];
         squareRootON = 'no';
       } else {
-        calculationsZone.push(displayValue);
-        mathematicalOperation = calculationsZone.join('').replace(/,/g, '.');
+        if (buttonValueSavePush === 'yes') {
+          calculationsZone.push(buttonValueSave);
+        }
+        mathematicalOperation = calculationsZone
+          .join('')
+          .replace(/,/g, '.')
+          .replace('=', '');
         resultOfTheAction = eval(mathematicalOperation);
-        displayValue = resultOfTheAction + '';
-        outputOperationValue.innerHTML = displayValue.replace('.', ',');
+        displayValue =
+          calculationsZone.join('').replace('=', '') + '=' + resultOfTheAction;
+        const result = resultOfTheAction + '';
+        equalLength = result.length;
+        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
         calculationsZone = [];
+        buttonValueSave = '';
+        buttonValueSavePush = 'yes';
+
+        if (displayValue === '=undefined') {
+          displayValue = 0;
+          outputOperationValue.innerHTML = displayValue;
+        }
+
+        if (displayValue.includes('=')) {
+          isEqualTo = 'yes';
+        }
       }
       break;
   }
@@ -273,6 +369,7 @@ for (let i = 0; i < allOperators.length; i += 1) {
 }
 
 buttonPower.onclick = () => {
+  isEqualTo = 'no';
   saveX = displayValue;
   powerY = 'y';
   powerY = powerY.sup();
@@ -284,16 +381,17 @@ buttonPower.onclick = () => {
 };
 
 buttonSquareRoot.onclick = () => {
-  let saveA = displayValue;
+  const saveA = displayValue;
   displayValue = '√' + saveA;
   outputOperationValue.innerHTML = displayValue.replace('.', ',');
   displayValue = saveA;
-  let calculationSqrt = Math.sqrt(saveA);
+  const calculationSqrt = Math.sqrt(saveA);
   calculationsZone.push(calculationSqrt + '');
   squareRootON = 'yes';
 };
 
 buttonRoot.onclick = () => {
+  isEqualTo = 'no';
   saveN = displayValue;
   saveNSup = saveN.sup();
   displayValue = saveNSup + '√';
@@ -304,20 +402,32 @@ buttonRoot.onclick = () => {
 };
 
 buttonComma.onclick = () => {
-  if (!displayValue.includes('.')) {
-    displayValue += '.';
-    outputOperationValue.innerHTML = displayValue.replace('.', ',');
-    if (rootON === 'yes') {
-      outputOperationValue.innerHTML =
-        saveNSup.replace('.', ',') + '√' + displayValue.replace('.', ',');
-    }
+  isEqualTo = 'no';
+  displayValue += '.';
+  outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
+  if (rootON === 'yes') {
+    outputOperationValue.innerHTML =
+      saveNSup.replace('.', ',') + '√' + displayValue.replace('.', ',');
   }
 };
 
 buttonBackspace.onclick = () => {
-  let displayValueLength = displayValue.length;
+  if (displayValue !== 0) {
+    if (displayValue.includes('=')) {
+      isEqualTo = 'yes';
+    } else {
+      isEqualTo = 'no';
+    }
+  }
+
+  const displayValueLength = displayValue.length;
   displayValue = displayValue.slice(0, displayValueLength - 1);
-  outputOperationValue.innerHTML = displayValue.replace('.', ',');
+  outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
+  calculationsZone = [];
+  calculationsZone.push(displayValue.replace('=', ''));
+  buttonValueSavePush = 'no';
+  pendingValuePush = 'yes';
+  calculationsZoneClean = 'cc';
 
   if (displayValue === '') {
     displayValue = 0;
@@ -336,5 +446,8 @@ buttonClear.onclick = () => {
   squareRootON = 'no';
   powerCalculationZone = [];
   powerON = 'no';
+  buttonValueSavePush = 'yes';
+  pendingValuePush = 'no';
+  calculationsZoneClean = 'yes';
   outputOperationValue.innerHTML = displayValue;
 };
