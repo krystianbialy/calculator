@@ -1,5 +1,5 @@
 .calculator__container {
-  max-width: 400px;
+  max-width: 420px;
   margin: 10px auto 0 auto;
 }
 
@@ -24,13 +24,13 @@
   .calculator__input-operation-value {
     font-weight: bold;
   }
-
-  .calculator__input-operation-value--new-line {
-    grid-column-start: 1;
-  }
 }
 
-@media (min-width: 400px) {
+.superscript {
+  font-size: 9px;
+}
+
+@media (min-width: 410px) {
   .calculator__container {
     padding: 15px;
     border: 2px solid grey;

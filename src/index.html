@@ -24,7 +24,38 @@
           id="calculator__input-operation-value-backspace">
           CE
         </button>
-        <button class="calculator__input-operation-value calculator__input-operation-value--number calculator__input-operation-value--new-line btn btn-blue-grey">
+        <button class="calculator__input-operation-value dropdown-toggle px-3 btn btn-primary" data-toggle="dropdown">
+          $
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item">
+            PLN
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item">
+            EUR
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item">
+            USD
+          </a>
+        </div>
+        <button class="calculator__input-operation-value btn btn-primary" id="calculator__input-operation-value-power">
+          x<span><sup class="superscript">y</sup></span>
+        </button>
+        <button class="calculator__input-operation-value calculator__input-operation-value--operator btn btn-primary">
+          (
+        </button>
+        <button class="calculator__input-operation-value calculator__input-operation-value--operator btn btn-primary">
+          )
+        </button>
+        <button class="calculator__input-operation-value btn btn-primary" id="calculator__input-operation-value-square-root">
+          √
+        </button>
+        <button class="calculator__input-operation-value btn btn-primary" id="calculator__input-operation-value-root">
+          <sup class="superscript">n</sup>√a
+        </button>
+        <button class="calculator__input-operation-value calculator__input-operation-value--number btn btn-blue-grey">
           1
         </button>
         <button class="calculator__input-operation-value calculator__input-operation-value--number btn btn-blue-grey">
