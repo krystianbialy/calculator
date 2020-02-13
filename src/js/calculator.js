@@ -1,453 +1,158 @@
-const allNumbers = document.getElementsByClassName(
-  'calculator__input-operation-value--number'
+const allNumbers = document.querySelectorAll(
+  '.calculator__input-operation-value--number'
 );
-const allOperators = document.getElementsByClassName(
-  'calculator__input-operation-value--operator'
+const allOperators = document.querySelectorAll(
+  '.calculator__input-operation-value--operator'
 );
-const buttonComma = document.getElementById(
-  'calculator__input-operation-value-comma'
+const buttonBackspace = document.querySelector(
+  '#calculator__input-operation-value-backspace'
 );
-const buttonBackspace = document.getElementById(
-  'calculator__input-operation-value-backspace'
+const buttonClear = document.querySelector(
+  '#calculator__input-operation-value-clear'
 );
-const buttonClear = document.getElementById(
-  'calculator__input-operation-value-clear'
-);
-const buttonRoot = document.getElementById(
-  'calculator__input-operation-value-root'
-);
-const buttonSquareRoot = document.getElementById(
-  'calculator__input-operation-value-square-root'
-);
-const buttonPower = document.getElementById(
-  'calculator__input-operation-value-power'
+const buttonEquals = document.querySelector(
+  '#calculator__input-operation-value-equals'
 );
 
-var outputOperationValue = document.getElementById(
-  'calculator__output-operation-value'
+var outputOperationValue = document.querySelector(
+  '#calculator__output-operation-value'
+);
+var outputOperationResult = document.querySelector(
+  '#calculator__output-operation-result'
 );
 
-var displayValue = 0;
-var pendingValue;
+var displayResult = 0;
+var displayValue = '';
+var saveNumber = 'false';
+var savePower = 'false';
+var saveDisplayValueForPowerXY;
+var power = [];
+var pendingPower = [];
+var pendingValue = [];
 var calculationsZone = [];
-var mathematicalOperation;
-var resultOfTheAction;
-var saveN;
-var saveNSup;
-var rootCalculationZone = [];
-var rootA;
-var rootON;
-var squareRootON;
-var saveX;
-var powerY;
-var powerCalculationZone = [];
-var powerON;
-var buttonValueSave;
-var buttonValueSavePush = 'yes';
-var pendingValuePush = 'no';
-var calculationsZoneClean = 'yes';
-var isEqualTo;
-var equalLength;
-var closingParenthesis = 'yes';
 
-let loadDisplayValue = () => {
+let loadDisplayResult = () => {
+  outputOperationResult.innerHTML = displayResult;
+};
+
+loadDisplayResult();
+
+let performOutputOperation = () => {
+  outputOperationResult.innerHTML = displayResult;
   outputOperationValue.innerHTML = displayValue;
 };
 
-loadDisplayValue();
-
-let rootVal = () => {
-  if (rootON === 'yes') {
-    rootA = displayValue;
-    outputOperationValue.innerHTML =
-      saveNSup.replace('.', ',') + '√' + rootA.replace('.', ',');
-    rootCalculationZone.push(rootA);
-  }
-};
-
-let powerVal = () => {
-  if (powerON === 'yes') {
-    powerY = displayValue;
-    outputOperationValue.innerHTML =
-      saveX.replace('.', ',') + powerY.sup().replace('.', ',');
-    powerCalculationZone.push(powerY);
-  }
-};
-
-let checkIncludes = () => {
-  if (isEqualTo === 'yes') {
-    displayValue = 0;
-    isEqualTo = 'no';
-  }
-};
-
-let updateOutputOperationValue = itemClicked => {
-  const buttonValue = itemClicked.target.innerText;
-
-  checkIncludes();
-
-  if (displayValue === 0) {
-    displayValue = '';
-  }
-
-  displayValue += buttonValue;
-  buttonValueSave = displayValue;
-  if (calculationsZoneClean === 'yes') {
+let performMathPowerAndPush = () => {
+  if (savePower === 'true' && saveNumber === 'false') {
     calculationsZone = [];
+    calculationsZone.push(
+      Math.pow(saveDisplayValueForPowerXY, pendingPower.join(''))
+    );
+  } else if (savePower === 'true' && saveNumber === 'true') {
+    calculationsZone.splice(-pendingValue.length);
+    pendingValue.splice(-pendingPower.length);
+    calculationsZone.push(
+      Math.pow(pendingValue.join(''), pendingPower.join(''))
+    );
+    console.log(pendingValue);
+    console.log(pendingPower);
+    console.log(calculationsZone);
   }
-  displayValue = calculationsZone.join('') + displayValue;
-  if (calculationsZoneClean === 'cc') {
-    displayValue = buttonValueSave;
-    calculationsZone = [];
-    calculationsZone.push(displayValue);
+};
+
+let enterANumber = itemClicked => {
+  const number = itemClicked.target.innerText;
+  displayValue += number;
+  calculationsZone.push(number);
+
+  if (saveNumber === 'true') {
+    pendingValue.push(number);
   }
-  outputOperationValue.innerHTML = displayValue
-    .replace(/\./g, ',')
-    .replace('=', '');
-  calculationsZoneClean = 'yes';
-  rootVal();
-  powerVal();
+
+  if (savePower === 'true') {
+    displayValue = displayValue.slice(0, displayValue.length - 1);
+    power.push(number);
+    pendingPower.push(number);
+    const savePendingPower = power;
+    displayValue += savePendingPower.join('').sup();
+    power = [];
+  }
+  outputOperationValue.innerHTML = displayValue;
 };
 
 let performOperation = itemClicked => {
   const operator = itemClicked.target.innerText;
 
-  switch (operator) {
-    case '+':
-      pendingValue = buttonValueSave;
-      if (pendingValuePush === 'yes') {
-        pendingValue = '';
-      }
-      if (isEqualTo === 'yes') {
-        calculationsZone = [];
-        calculationsZone.push('+');
-        const valueSplit = displayValue.split('');
-        const slice = valueSplit.slice(-equalLength);
-        displayValue = slice.join('');
-        calculationsZone.splice(0, 0, displayValue);
-        displayValue = calculationsZone.join('').replace('=', '');
-        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
-      } else {
-        if (closingParenthesis === 'yes') {
-          calculationsZone.push(pendingValue);
-        }
-        calculationsZone.push('+');
-        displayValue = calculationsZone.join('');
-        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
-      }
-      displayValue = 0;
-      buttonValueSave = 0;
-      buttonValueSavePush = 'yes';
-      pendingValuePush = 'no';
-      calculationsZoneClean = 'no';
-      closingParenthesis = 'yes';
-
-      break;
-
-    case '-':
-      pendingValue = buttonValueSave;
-      if (pendingValuePush === 'yes') {
-        pendingValue = '';
-      }
-      if (isEqualTo === 'yes') {
-        calculationsZone = [];
-        calculationsZone.push('-');
-        const valueSplit = displayValue.split('');
-        const slice = valueSplit.slice(-equalLength);
-        displayValue = slice.join('');
-        calculationsZone.splice(0, 0, displayValue);
-        displayValue = calculationsZone.join('').replace('=', '');
-        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
-      } else {
-        if (closingParenthesis === 'yes') {
-          calculationsZone.push(pendingValue);
-        }
-        calculationsZone.push('-');
-        displayValue = calculationsZone.join('');
-        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
-      }
-      displayValue = 0;
-      buttonValueSave = 0;
-      buttonValueSavePush = 'yes';
-      pendingValuePush = 'no';
-      calculationsZoneClean = 'no';
-      closingParenthesis = 'yes';
-
-      break;
-
-    case '*':
-      pendingValue = buttonValueSave;
-      if (pendingValuePush === 'yes') {
-        pendingValue = '';
-      }
-      if (isEqualTo === 'yes') {
-        calculationsZone = [];
-        calculationsZone.push('*');
-        const valueSplit = displayValue.split('');
-        const slice = valueSplit.slice(-equalLength);
-        displayValue = slice.join('');
-        calculationsZone.splice(0, 0, displayValue);
-        displayValue = calculationsZone.join('').replace('=', '');
-        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
-      } else {
-        if (closingParenthesis === 'yes') {
-          calculationsZone.push(pendingValue);
-        }
-        calculationsZone.push('*');
-        displayValue = calculationsZone.join('');
-        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
-      }
-      displayValue = 0;
-      buttonValueSave = 0;
-      buttonValueSavePush = 'yes';
-      pendingValuePush = 'no';
-      calculationsZoneClean = 'no';
-      closingParenthesis = 'yes';
-
-      break;
-
-    case '/':
-      pendingValue = buttonValueSave;
-      if (pendingValuePush === 'yes') {
-        pendingValue = '';
-      }
-      if (isEqualTo === 'yes') {
-        calculationsZone = [];
-        calculationsZone.push('/');
-        const valueSplit = displayValue.split('');
-        const slice = valueSplit.slice(-equalLength);
-        displayValue = slice.join('');
-        calculationsZone.splice(0, 0, displayValue);
-        displayValue = calculationsZone.join('').replace('=', '');
-        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
-      } else {
-        if (closingParenthesis === 'yes') {
-          calculationsZone.push(pendingValue);
-        }
-        calculationsZone.push('/');
-        displayValue = calculationsZone.join('');
-        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
-      }
-      displayValue = 0;
-      buttonValueSave = 0;
-      buttonValueSavePush = 'yes';
-      pendingValuePush = 'no';
-      calculationsZoneClean = 'no';
-      closingParenthesis = 'yes';
-
-      break;
-
-    case '(':
-      pendingValue = buttonValueSave;
-      if (pendingValuePush === 'yes') {
-        pendingValue = '';
-      }
-      if (isEqualTo === 'yes') {
-        calculationsZone = [];
-        calculationsZone.push('(');
-        const valueSplit = displayValue.split('');
-        const slice = valueSplit.slice(-equalLength);
-        displayValue = slice.join('');
-        calculationsZone.splice(0, 0, displayValue);
-        displayValue = calculationsZone.join('').replace('=', '');
-        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
-      } else {
-        calculationsZone.push('(');
-        displayValue = calculationsZone.join('');
-        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
-      }
-      displayValue = 0;
-      buttonValueSave = 0;
-      buttonValueSavePush = 'no';
-      pendingValuePush = 'no';
-      calculationsZoneClean = 'no';
-
-      break;
-
-    case ')':
-      pendingValue = buttonValueSave;
-      if (pendingValuePush === 'yes') {
-        pendingValue = '';
-      }
-      if (isEqualTo === 'yes') {
-        calculationsZone = [];
-        calculationsZone.push(')');
-        const valueSplit = displayValue.split('');
-        const slice = valueSplit.slice(-equalLength);
-        displayValue = slice.join('');
-        calculationsZone.splice(0, 0, displayValue);
-        displayValue = calculationsZone.join('').replace('=', '');
-        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
-      } else {
-        calculationsZone.push(pendingValue);
-        calculationsZone.push(')');
-        displayValue = calculationsZone.join('');
-        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
-        closingParenthesis = 'no';
-      }
-      displayValue = 0;
-      buttonValueSave = 0;
-      buttonValueSavePush = 'no';
-      pendingValuePush = 'no';
-      calculationsZoneClean = 'no';
-
-      break;
-
-    case '=':
-      if (powerON === 'yes') {
-        calculationsZone.push(
-          Math.pow(
-            powerCalculationZone[0],
-            powerCalculationZone[powerCalculationZone.length - 1]
-          )
-        );
-        mathematicalOperation = calculationsZone.join('').replace(/,/g, '.');
-        resultOfTheAction = eval(mathematicalOperation);
-        displayValue = resultOfTheAction + '';
-        outputOperationValue.innerHTML = displayValue.replace('.', ',');
-        calculationsZone = [];
-        powerCalculationZone = [];
-        powerON = 'no';
-      } else if (rootON === 'yes') {
-        calculationsZone.push(
-          Math.pow(
-            rootCalculationZone[rootCalculationZone.length - 1],
-            1 / rootCalculationZone[0]
-          )
-        );
-        mathematicalOperation = calculationsZone.join('').replace(/,/g, '.');
-        resultOfTheAction = eval(mathematicalOperation);
-        displayValue = resultOfTheAction + '';
-        outputOperationValue.innerHTML = displayValue.replace('.', ',');
-        calculationsZone = [];
-        rootCalculationZone = [];
-        rootON = 'no';
-      } else if (squareRootON === 'yes') {
-        mathematicalOperation = calculationsZone.join('').replace(/,/g, '.');
-        resultOfTheAction = eval(mathematicalOperation);
-        displayValue = resultOfTheAction + '';
-        outputOperationValue.innerHTML = displayValue.replace('.', ',');
-        calculationsZone = [];
-        squareRootON = 'no';
-      } else {
-        if (buttonValueSavePush === 'yes') {
-          calculationsZone.push(buttonValueSave);
-        }
-        mathematicalOperation = calculationsZone
-          .join('')
-          .replace(/,/g, '.')
-          .replace('=', '');
-        resultOfTheAction = eval(mathematicalOperation);
-        displayValue =
-          calculationsZone.join('').replace('=', '') + '=' + resultOfTheAction;
-        const result = resultOfTheAction + '';
-        equalLength = result.length;
-        outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
-        calculationsZone = [];
-        buttonValueSave = '';
-        buttonValueSavePush = 'yes';
-
-        if (displayValue === '=undefined') {
-          displayValue = 0;
-          outputOperationValue.innerHTML = displayValue;
-        }
-
-        if (displayValue.includes('=')) {
-          isEqualTo = 'yes';
-        }
-      }
-      break;
+  if (operator === '(' || operator === ')') {
+    displayValue += operator;
+    calculationsZone.push(operator);
   }
+
+  if (
+    operator === '*' ||
+    operator === '/' ||
+    operator === '+' ||
+    operator === '-'
+  ) {
+    performMathPowerAndPush();
+    pendingValue = [];
+    pendingPower = [];
+    saveNumber = 'true';
+    savePower = 'false';
+    displayValue += operator;
+    calculationsZone.push(operator);
+    console.log(calculationsZone);
+  }
+
+  if (operator === 'x2' && saveNumber === 'false') {
+    const saveDisplayValueForPowerX2 = displayValue;
+    displayValue += '2'.sup();
+    calculationsZone = [];
+    calculationsZone.push(Math.pow(saveDisplayValueForPowerX2, 2));
+  } else if (operator === 'x2' && saveNumber === 'true') {
+    displayValue += '2'.sup();
+    calculationsZone.splice(-pendingValue.length);
+    calculationsZone.push(Math.pow(pendingValue.join(''), 2));
+  }
+
+  if (operator === 'xy') {
+    saveDisplayValueForPowerXY = displayValue;
+    savePower = 'true';
+    console.log("I'm clicked");
+  }
+
+  outputOperationValue.innerHTML = displayValue;
 };
 
 for (let i = 0; i < allNumbers.length; i += 1) {
-  allNumbers[i].addEventListener('click', updateOutputOperationValue);
+  allNumbers[i].addEventListener('click', enterANumber);
 }
 
 for (let i = 0; i < allOperators.length; i += 1) {
   allOperators[i].addEventListener('click', performOperation);
 }
 
-buttonPower.onclick = () => {
-  isEqualTo = 'no';
-  saveX = displayValue;
-  powerY = 'y';
-  powerY = powerY.sup();
-  displayValue = saveX + powerY;
-  outputOperationValue.innerHTML = displayValue.replace('.', ',');
-  powerCalculationZone.push(saveX);
-  displayValue = 0;
-  powerON = 'yes';
-};
-
-buttonSquareRoot.onclick = () => {
-  const saveA = displayValue;
-  displayValue = '√' + saveA;
-  outputOperationValue.innerHTML = displayValue.replace('.', ',');
-  displayValue = saveA;
-  const calculationSqrt = Math.sqrt(saveA);
-  calculationsZone.push(calculationSqrt + '');
-  squareRootON = 'yes';
-};
-
-buttonRoot.onclick = () => {
-  isEqualTo = 'no';
-  saveN = displayValue;
-  saveNSup = saveN.sup();
-  displayValue = saveNSup + '√';
-  outputOperationValue.innerHTML = displayValue.replace('.', ',');
-  rootCalculationZone.push(saveN);
-  displayValue = 0;
-  rootON = 'yes';
-};
-
-buttonComma.onclick = () => {
-  isEqualTo = 'no';
-  displayValue += '.';
-  outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
-  if (rootON === 'yes') {
-    outputOperationValue.innerHTML =
-      saveNSup.replace('.', ',') + '√' + displayValue.replace('.', ',');
-  }
-};
-
 buttonBackspace.onclick = () => {
-  if (displayValue !== 0) {
-    if (displayValue.includes('=')) {
-      isEqualTo = 'yes';
-    } else {
-      isEqualTo = 'no';
-    }
-  }
-
-  const displayValueLength = displayValue.length;
-  displayValue = displayValue.slice(0, displayValueLength - 1);
-  outputOperationValue.innerHTML = displayValue.replace(/\./g, ',');
-  calculationsZone = [];
-  calculationsZone.push(displayValue.replace('=', ''));
-  buttonValueSavePush = 'no';
-  pendingValuePush = 'yes';
-  calculationsZoneClean = 'cc';
-
-  if (displayValue === '') {
-    displayValue = 0;
-    outputOperationValue.innerHTML = displayValue;
-  } else if (displayValue === '-') {
-    displayValue = 0;
-    outputOperationValue.innerHTML = displayValue;
-  }
+  displayValue = displayValue.slice(0, displayValue.length - 1);
+  calculationsZone.pop();
+  outputOperationValue.innerHTML = displayValue;
 };
 
 buttonClear.onclick = () => {
-  displayValue = 0;
+  displayResult = 0;
+  displayValue = '';
+  performOutputOperation();
+  saveNumber = 'false';
+  savePower = 'false';
+  power = [];
+  pendingValue = [];
   calculationsZone = [];
-  rootCalculationZone = [];
-  rootON = 'no';
-  squareRootON = 'no';
-  powerCalculationZone = [];
-  powerON = 'no';
-  buttonValueSavePush = 'yes';
-  pendingValuePush = 'no';
-  calculationsZoneClean = 'yes';
-  outputOperationValue.innerHTML = displayValue;
+};
+
+buttonEquals.onclick = () => {
+  performMathPowerAndPush();
+  let resultOfTheAction = eval(calculationsZone.join(''));
+  displayValue += '=';
+  displayResult = resultOfTheAction;
+  performOutputOperation();
 };
