@@ -25,37 +25,152 @@ var displayResult = 0;
 var displayValue = '';
 var saveNumber = 'false';
 var savePower = 'false';
-var saveDisplayValueForPowerXY;
-var power = [];
-var pendingPower = [];
+var saveRootNumber = 'false';
+var saveNAndRootNumber = 'false';
+var closingParenthesis = 'false';
+var openingParethesis;
+var saveDisplayValueForPowerYOrRootN;
+var powerOrRootNumber = [];
+var rootN = [];
+var pendingPowerOrRootNumber = [];
 var pendingValue = [];
 var calculationsZone = [];
 
-let loadDisplayResult = () => {
+const loadDisplayResult = () => {
   outputOperationResult.innerHTML = displayResult;
 };
 
 loadDisplayResult();
 
-let performOutputOperation = () => {
+const performOutputOperation = () => {
   outputOperationResult.innerHTML = displayResult;
   outputOperationValue.innerHTML = displayValue;
 };
 
-let performMathPowerAndPush = () => {
+const performMathPowerAndPush = () => {
   if (savePower === 'true' && saveNumber === 'false') {
     calculationsZone = [];
+    openingParethesis = saveDisplayValueForPowerYOrRootN.includes('(');
+    if (openingParethesis === true) {
+      saveDisplayValueForPowerYOrRootN = saveDisplayValueForPowerYOrRootN.replace(
+        '(',
+        ''
+      );
+      calculationsZone.push('(');
+    }
     calculationsZone.push(
-      Math.pow(saveDisplayValueForPowerXY, pendingPower.join(''))
+      Math.pow(
+        saveDisplayValueForPowerYOrRootN,
+        pendingPowerOrRootNumber.join('')
+      )
     );
-  } else if (savePower === 'true' && saveNumber === 'true') {
+    if (openingParethesis === true) {
+      calculationsZone.push(')');
+    }
+  }
+
+  if (
+    savePower === 'true' &&
+    saveNumber === 'true' &&
+    closingParenthesis === 'false'
+  ) {
     calculationsZone.splice(-pendingValue.length);
-    pendingValue.splice(-pendingPower.length);
+    pendingValue.splice(-pendingPowerOrRootNumber.length);
     calculationsZone.push(
-      Math.pow(pendingValue.join(''), pendingPower.join(''))
+      Math.pow(pendingValue.join(''), pendingPowerOrRootNumber.join(''))
     );
     console.log(pendingValue);
-    console.log(pendingPower);
+    console.log(pendingPowerOrRootNumber);
+    console.log(calculationsZone);
+  }
+
+  if (
+    savePower === 'true' &&
+    saveNumber === 'true' &&
+    closingParenthesis === 'true'
+  ) {
+    calculationsZone.splice(-pendingValue.length - 1);
+    pendingValue.splice(-pendingPowerOrRootNumber.length);
+    calculationsZone.push(
+      Math.pow(pendingValue.join(''), pendingPowerOrRootNumber.join(''))
+    );
+    calculationsZone.push(')');
+  }
+};
+
+const performMathRootAndPush = () => {
+  if (saveRootNumber === 'true' && saveNumber === 'false') {
+    calculationsZone = [];
+    openingParethesis = displayValue.includes('(');
+    if (openingParethesis === true) {
+      calculationsZone.push('(');
+    }
+    calculationsZone.push(Math.sqrt(pendingPowerOrRootNumber.join('')));
+    if (openingParethesis === true) {
+      calculationsZone.push(')');
+    }
+  } else if (saveNAndRootNumber === 'true' && saveNumber === 'false') {
+    calculationsZone = [];
+    openingParethesis = saveDisplayValueForPowerYOrRootN.includes('(');
+    if (openingParethesis === true) {
+      saveDisplayValueForPowerYOrRootN = saveDisplayValueForPowerYOrRootN.replace(
+        '(',
+        ''
+      );
+      calculationsZone.push('(');
+    }
+    calculationsZone.push(
+      Math.pow(
+        pendingPowerOrRootNumber.join(''),
+        1 / saveDisplayValueForPowerYOrRootN
+      )
+    );
+    if (openingParethesis === true) {
+      calculationsZone.push(')');
+    }
+    console.log(calculationsZone);
+  }
+
+  if (
+    saveRootNumber === 'true' &&
+    saveNumber === 'true' &&
+    closingParenthesis === 'false'
+  ) {
+    calculationsZone.splice(-pendingValue.length);
+    pendingValue.splice(-pendingPowerOrRootNumber.length);
+    calculationsZone.push(Math.sqrt(pendingPowerOrRootNumber.join('')));
+  } else if (
+    saveNAndRootNumber === 'true' &&
+    saveNumber === 'true' &&
+    closingParenthesis === 'false'
+  ) {
+    calculationsZone.splice(-pendingValue.length);
+    pendingValue.splice(-pendingPowerOrRootNumber.length);
+    calculationsZone.push(
+      Math.pow(pendingPowerOrRootNumber.join(''), 1 / pendingValue.join(''))
+    );
+  }
+
+  if (
+    saveRootNumber === 'true' &&
+    saveNumber === 'true' &&
+    closingParenthesis === 'true'
+  ) {
+    calculationsZone.splice(-pendingValue.length - 1);
+    pendingValue.splice(-pendingPowerOrRootNumber.length);
+    calculationsZone.push(Math.sqrt(pendingPowerOrRootNumber.join('')));
+    calculationsZone.push(')');
+  } else if (
+    saveNAndRootNumber === 'true' &&
+    saveNumber === 'true' &&
+    closingParenthesis === 'true'
+  ) {
+    calculationsZone.splice(-pendingValue.length - 1);
+    pendingValue.splice(-pendingPowerOrRootNumber.length);
+    calculationsZone.push(
+      Math.pow(pendingPowerOrRootNumber.join(''), 1 / pendingValue.join(''))
+    );
+    calculationsZone.push(')');
     console.log(calculationsZone);
   }
 };
@@ -64,6 +179,7 @@ let enterANumber = itemClicked => {
   const number = itemClicked.target.innerText;
   displayValue += number;
   calculationsZone.push(number);
+  rootN.push(number);
 
   if (saveNumber === 'true') {
     pendingValue.push(number);
@@ -71,21 +187,40 @@ let enterANumber = itemClicked => {
 
   if (savePower === 'true') {
     displayValue = displayValue.slice(0, displayValue.length - 1);
-    power.push(number);
-    pendingPower.push(number);
-    const savePendingPower = power;
-    displayValue += savePendingPower.join('').sup();
-    power = [];
+    powerOrRootNumber.push(number);
+    pendingPowerOrRootNumber.push(number);
+    const power = powerOrRootNumber;
+    displayValue += power.join('').sup();
+    powerOrRootNumber = [];
   }
+
+  if (saveRootNumber === 'true' || saveNAndRootNumber === 'true') {
+    displayValue = displayValue.slice(0, displayValue.length - 1);
+    powerOrRootNumber.push(number);
+    pendingPowerOrRootNumber.push(number);
+    const rootNumber = powerOrRootNumber;
+    displayValue += rootNumber.join('');
+    powerOrRootNumber = [];
+  }
+
   outputOperationValue.innerHTML = displayValue;
 };
 
 let performOperation = itemClicked => {
-  const operator = itemClicked.target.innerText;
+  let operator = itemClicked.target.innerText;
+
+  if (operator === '×') {
+    operator = '*';
+  } else if (operator === '÷') {
+    operator = '/';
+  }
 
   if (operator === '(' || operator === ')') {
     displayValue += operator;
     calculationsZone.push(operator);
+    if (operator === ')') {
+      closingParenthesis = 'true';
+    }
   }
 
   if (
@@ -95,19 +230,47 @@ let performOperation = itemClicked => {
     operator === '-'
   ) {
     performMathPowerAndPush();
+    performMathRootAndPush();
+    if (
+      openingParethesis === true &&
+      saveNumber === 'false' &&
+      (savePower === 'true' ||
+        saveRootNumber === 'true' ||
+        saveNAndRootNumber === 'true')
+    ) {
+      calculationsZone.pop();
+    }
     pendingValue = [];
-    pendingPower = [];
+    pendingPowerOrRootNumber = [];
+    rootN = [];
     saveNumber = 'true';
     savePower = 'false';
+    saveRootNumber = 'false';
+    saveNAndRootNumber = 'false';
+    closingParenthesis = 'false';
+    if (operator === '*') {
+      operator = '×';
+    } else if (operator === '/') {
+      operator = '÷';
+    }
     displayValue += operator;
+    if (operator === '×') {
+      operator = '*';
+    } else if (operator === '÷') {
+      operator = '/';
+    }
     calculationsZone.push(operator);
-    console.log(calculationsZone);
   }
 
   if (operator === 'x2' && saveNumber === 'false') {
-    const saveDisplayValueForPowerX2 = displayValue;
+    let saveDisplayValueForPowerX2 = displayValue;
     displayValue += '2'.sup();
     calculationsZone = [];
+    openingParethesis = saveDisplayValueForPowerX2.includes('(');
+    if (openingParethesis === true) {
+      saveDisplayValueForPowerX2 = saveDisplayValueForPowerX2.replace('(', '');
+      calculationsZone.push('(');
+    }
     calculationsZone.push(Math.pow(saveDisplayValueForPowerX2, 2));
   } else if (operator === 'x2' && saveNumber === 'true') {
     displayValue += '2'.sup();
@@ -116,9 +279,25 @@ let performOperation = itemClicked => {
   }
 
   if (operator === 'xy') {
-    saveDisplayValueForPowerXY = displayValue;
+    saveDisplayValueForPowerYOrRootN = displayValue;
     savePower = 'true';
-    console.log("I'm clicked");
+  }
+
+  if (operator === '√') {
+    saveRootNumber = 'true';
+    displayValue += '√';
+  }
+
+  if (operator === 'n√a') {
+    saveDisplayValueForPowerYOrRootN = displayValue;
+    saveNAndRootNumber = 'true';
+    displayValue = displayValue.slice(0, displayValue.length - rootN.length);
+    displayValue += rootN.join('').sup() + '√';
+  }
+
+  if (operator === '.') {
+    displayValue += operator;
+    calculationsZone.push(operator);
   }
 
   outputOperationValue.innerHTML = displayValue;
@@ -144,14 +323,21 @@ buttonClear.onclick = () => {
   performOutputOperation();
   saveNumber = 'false';
   savePower = 'false';
-  power = [];
+  saveRootNumber = 'false';
+  saveNAndRootNumber = 'false';
+  closingParenthesis = 'false';
+  powerOrRootNumber = [];
+  rootN = [];
+  pendingPowerOrRootNumber = [];
   pendingValue = [];
   calculationsZone = [];
 };
 
 buttonEquals.onclick = () => {
   performMathPowerAndPush();
-  let resultOfTheAction = eval(calculationsZone.join(''));
+  performMathRootAndPush();
+  console.log(calculationsZone);
+  const resultOfTheAction = eval(calculationsZone.join(''));
   displayValue += '=';
   displayResult = resultOfTheAction;
   performOutputOperation();
