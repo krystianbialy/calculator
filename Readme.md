@@ -15,7 +15,7 @@ Project is created with:
 * RWD
 
 ## Status
-finished
+under construction
 
 ## Setup
 To run this project, install it locally using yarn:

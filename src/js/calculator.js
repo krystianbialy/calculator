@@ -35,6 +35,7 @@ var rootN = [];
 var pendingPowerOrRootNumber = [];
 var pendingValue = [];
 var calculationsZone = [];
+var displayedValueMemory = [];
 
 const loadDisplayResult = () => {
   outputOperationResult.innerHTML = displayResult;
@@ -45,6 +46,23 @@ loadDisplayResult();
 const performOutputOperation = () => {
   outputOperationResult.innerHTML = displayResult;
   outputOperationValue.innerHTML = displayValue;
+};
+
+const pushDisplayedValueToMemory = () => {
+  const valueToMemory = displayValue
+    .replace(/[<sup>]/g, '')
+    .replace(/[</sup>]/g, '')
+    .replace(/\+/g, '');
+  let currentMemoryValue;
+  console.log(valueToMemory);
+  if (displayedValueMemory.length > 0) {
+    currentMemoryValue = displayedValueMemory.reduce((x, y) => x + y);
+  } else {
+    currentMemoryValue = 0;
+  }
+  console.log(currentMemoryValue);
+  displayedValueMemory.push(valueToMemory.length - currentMemoryValue);
+  console.log(displayedValueMemory);
 };
 
 const performMathPowerAndPush = () => {
@@ -79,9 +97,6 @@ const performMathPowerAndPush = () => {
     calculationsZone.push(
       Math.pow(pendingValue.join(''), pendingPowerOrRootNumber.join(''))
     );
-    console.log(pendingValue);
-    console.log(pendingPowerOrRootNumber);
-    console.log(calculationsZone);
   }
 
   if (
@@ -128,7 +143,6 @@ const performMathRootAndPush = () => {
     if (openingParethesis === true) {
       calculationsZone.push(')');
     }
-    console.log(calculationsZone);
   }
 
   if (
@@ -171,7 +185,6 @@ const performMathRootAndPush = () => {
       Math.pow(pendingPowerOrRootNumber.join(''), 1 / pendingValue.join(''))
     );
     calculationsZone.push(')');
-    console.log(calculationsZone);
   }
 };
 
@@ -253,6 +266,7 @@ let performOperation = itemClicked => {
     } else if (operator === '/') {
       operator = '÷';
     }
+    pushDisplayedValueToMemory();
     displayValue += operator;
     if (operator === '×') {
       operator = '*';
@@ -312,9 +326,32 @@ for (let i = 0; i < allOperators.length; i += 1) {
 }
 
 buttonBackspace.onclick = () => {
-  displayValue = displayValue.slice(0, displayValue.length - 1);
-  calculationsZone.pop();
-  outputOperationValue.innerHTML = displayValue;
+  const equals = displayValue.includes('=');
+  if (equals === false) {
+    const closingSuperscript = '</sup>';
+    const closingSuperscriptDetection = displayValue.slice(-6);
+    if (closingSuperscript === closingSuperscriptDetection) {
+      const displayedValueMemoryLastValue =
+        displayedValueMemory[displayedValueMemory.length - 1];
+      displayValue = displayValue.slice(0, displayValue.length - 11);
+      displayValue = displayValue.slice(
+        0,
+        displayValue.length - displayedValueMemoryLastValue
+      );
+    }
+    if (closingSuperscript !== closingSuperscriptDetection) {
+      displayValue = displayValue.slice(0, displayValue.length - 1);
+    }
+    calculationsZone.pop();
+  } else {
+    displayValue = displayValue.slice(0, displayValue.length - 1);
+  }
+  if (displayValue === '') {
+    displayResult = 0;
+  }
+  performOutputOperation();
+  console.log(displayValue);
+  console.log(calculationsZone);
 };
 
 buttonClear.onclick = () => {
