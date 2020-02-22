@@ -28,6 +28,8 @@ var savePower = 'false';
 var saveRootNumber = 'false';
 var saveNAndRootNumber = 'false';
 var closingParenthesis = 'false';
+var equalsWasClicked = 'false';
+var performedMathPowerAndPush = 'false';
 var openingParethesis;
 var saveDisplayValueForPowerYOrRootN;
 var powerOrRootNumber = [];
@@ -35,7 +37,7 @@ var rootN = [];
 var pendingPowerOrRootNumber = [];
 var pendingValue = [];
 var calculationsZone = [];
-var displayedValueMemory = [];
+var powersAndRootsLengthMemory = [];
 
 const loadDisplayResult = () => {
   outputOperationResult.innerHTML = displayResult;
@@ -49,20 +51,19 @@ const performOutputOperation = () => {
 };
 
 const pushDisplayedValueToMemory = () => {
+  /*
   const valueToMemory = displayValue
     .replace(/[<sup>]/g, '')
     .replace(/[</sup>]/g, '')
     .replace(/\+/g, '');
   let currentMemoryValue;
-  console.log(valueToMemory);
   if (displayedValueMemory.length > 0) {
     currentMemoryValue = displayedValueMemory.reduce((x, y) => x + y);
   } else {
     currentMemoryValue = 0;
   }
-  console.log(currentMemoryValue);
   displayedValueMemory.push(valueToMemory.length - currentMemoryValue);
-  console.log(displayedValueMemory);
+  */
 };
 
 const performMathPowerAndPush = () => {
@@ -85,6 +86,10 @@ const performMathPowerAndPush = () => {
     if (openingParethesis === true) {
       calculationsZone.push(')');
     }
+    powersAndRootsLengthMemory.push(
+      saveDisplayValueForPowerYOrRootN.length + pendingPowerOrRootNumber.length
+    );
+    console.log(powersAndRootsLengthMemory);
   }
 
   if (
@@ -97,6 +102,10 @@ const performMathPowerAndPush = () => {
     calculationsZone.push(
       Math.pow(pendingValue.join(''), pendingPowerOrRootNumber.join(''))
     );
+    powersAndRootsLengthMemory.push(
+      pendingValue.length + pendingPowerOrRootNumber.length
+    );
+    console.log(powersAndRootsLengthMemory);
   }
 
   if (
@@ -110,6 +119,10 @@ const performMathPowerAndPush = () => {
       Math.pow(pendingValue.join(''), pendingPowerOrRootNumber.join(''))
     );
     calculationsZone.push(')');
+    powersAndRootsLengthMemory.push(
+      pendingValue.length + pendingPowerOrRootNumber.length
+    );
+    console.log(powersAndRootsLengthMemory);
   }
 };
 
@@ -212,7 +225,7 @@ let enterANumber = itemClicked => {
     powerOrRootNumber.push(number);
     pendingPowerOrRootNumber.push(number);
     const rootNumber = powerOrRootNumber;
-    displayValue += rootNumber.join('');
+    displayValue += rootNumber.join('') + '<rootDelete>';
     powerOrRootNumber = [];
   }
 
@@ -286,10 +299,15 @@ let performOperation = itemClicked => {
       calculationsZone.push('(');
     }
     calculationsZone.push(Math.pow(saveDisplayValueForPowerX2, 2));
+    const valueAndPowerToMemory = saveDisplayValueForPowerX2 + 1;
+    powersAndRootsLengthMemory.push(valueAndPowerToMemory.length);
+    console.log(powersAndRootsLengthMemory);
   } else if (operator === 'x2' && saveNumber === 'true') {
     displayValue += '2'.sup();
     calculationsZone.splice(-pendingValue.length);
     calculationsZone.push(Math.pow(pendingValue.join(''), 2));
+    powersAndRootsLengthMemory.push(pendingValue.length + 1);
+    console.log(powersAndRootsLengthMemory);
   }
 
   if (operator === 'xy') {
@@ -326,20 +344,33 @@ for (let i = 0; i < allOperators.length; i += 1) {
 }
 
 buttonBackspace.onclick = () => {
+  if (equalsWasClicked === 'false') {
+    if (performedMathPowerAndPush === 'false') {
+      performMathPowerAndPush();
+      /* do dokończenia odblokowanie tej funkcji */
+    }
+    performedMathPowerAndPush = 'true';
+  }
   const equals = displayValue.includes('=');
   if (equals === false) {
     const closingSuperscript = '</sup>';
     const closingSuperscriptDetection = displayValue.slice(-6);
     if (closingSuperscript === closingSuperscriptDetection) {
       const displayedValueMemoryLastValue =
-        displayedValueMemory[displayedValueMemory.length - 1];
+        powersAndRootsLengthMemory[powersAndRootsLengthMemory.length - 1];
       displayValue = displayValue.slice(0, displayValue.length - 11);
       displayValue = displayValue.slice(
         0,
         displayValue.length - displayedValueMemoryLastValue
       );
-    }
-    if (closingSuperscript !== closingSuperscriptDetection) {
+      powersAndRootsLengthMemory.pop();
+    } else if (closingSuperscript !== closingSuperscriptDetection) {
+      /* const test1 = displayValue.slice(-1);
+      const testx = test1.match(/[0-9]/);
+      console.log(testx);
+      if (testx !== null) {
+        displayedValueMemory.pop();
+      } */
       displayValue = displayValue.slice(0, displayValue.length - 1);
     }
     calculationsZone.pop();
@@ -352,6 +383,7 @@ buttonBackspace.onclick = () => {
   performOutputOperation();
   console.log(displayValue);
   console.log(calculationsZone);
+  console.log(powersAndRootsLengthMemory);
 };
 
 buttonClear.onclick = () => {
@@ -373,9 +405,11 @@ buttonClear.onclick = () => {
 buttonEquals.onclick = () => {
   performMathPowerAndPush();
   performMathRootAndPush();
+  pushDisplayedValueToMemory();
   console.log(calculationsZone);
   const resultOfTheAction = eval(calculationsZone.join(''));
   displayValue += '=';
   displayResult = resultOfTheAction;
   performOutputOperation();
+  equalsWasClicked = 'true';
 };

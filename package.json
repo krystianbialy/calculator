@@ -35,9 +35,6 @@
     "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {
-    "filemanager-webpack-plugin": "^2.0.5",
-    "jquery": "^3.4.1",
-    "mdbootstrap": "^4.10.1",
-    "popper.js": "^1.16.0"
+    "filemanager-webpack-plugin": "^2.0.5"
   }
 }

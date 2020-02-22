@@ -1,5 +1,5 @@
 ## General info  
-Calculator- Intive Patronage.
+Advanced calculator + NBP API
 
 ## Technologies and tools
 Project is created with:
