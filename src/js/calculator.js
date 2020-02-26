@@ -44,6 +44,29 @@ var powersXYorRootsLengthMemory = [];
 var powersYorRootsNLengthMemory = [];
 var rootsNumberValueLengthMemory = [];
 
+const initialConfiguration = () => {
+  displayResult = 0;
+  displayValue = '';
+  saveNumber = 'false';
+  savePower = 'false';
+  saveRootNumber = 'false';
+  saveNAndRootNumber = 'false';
+  closingParenthesis = 'false';
+  equalsWasClicked = 'false';
+  performedMathPowerAndPushed = 'false';
+  performedSquareRootAndPushed = 'false';
+  powerOrRootNumber = [];
+  rootN = [];
+  pendingPowerOrRootNumber = [];
+  pendingValue = [];
+  calculationsZone = [];
+  powersX2orSquareRootsLengthMemory = [];
+  squareRootsNumberValueLengthMemory = [];
+  powersXYorRootsLengthMemory = [];
+  powersYorRootsNLengthMemory = [];
+  rootsNumberValueLengthMemory = [];
+};
+
 const loadDisplayResult = () => {
   outputOperationResult.innerHTML = displayResult;
 };
@@ -243,8 +266,15 @@ let enterANumber = itemClicked => {
     }
     powerOrRootNumber = [];
   }
-
   outputOperationValue.innerHTML = displayValue;
+  console.log(pendingValue);
+  console.log(displayValue);
+  console.log(calculationsZone);
+  console.log(powersX2orSquareRootsLengthMemory);
+  console.log(powersXYorRootsLengthMemory);
+  console.log(powersYorRootsNLengthMemory);
+  console.log(rootsNumberValueLengthMemory);
+  console.log(squareRootsNumberValueLengthMemory);
 };
 
 let performOperation = itemClicked => {
@@ -304,6 +334,12 @@ let performOperation = itemClicked => {
   }
 
   if (operator === 'x2' && saveNumber === 'false') {
+    /*
+    if (displayValue === '' || displayValue === '(') {
+      displayValue = '0';
+    }
+    TWO WAYS
+    */
     let saveDisplayValueForPowerX2 = displayValue;
     displayValue += '2'.sup();
     calculationsZone = [];
@@ -328,12 +364,15 @@ let performOperation = itemClicked => {
     saveDisplayValueForPowerYOrRootN = displayValue;
     savePower = 'true';
     performedMathPowerAndPushed = 'false';
+    equalsWasClicked = 'false';
   }
 
   if (operator === '√') {
     saveRootNumber = 'true';
     displayValue += '√';
     performedSquareRootAndPushed = 'false';
+    performedMathPowerAndPushed = 'true';
+    equalsWasClicked = 'false';
   }
 
   if (operator === 'n√a') {
@@ -341,6 +380,9 @@ let performOperation = itemClicked => {
     saveNAndRootNumber = 'true';
     displayValue = displayValue.slice(0, displayValue.length - rootN.length);
     displayValue += rootN.join('').sup() + '√';
+    performedSquareRootAndPushed = 'false';
+    performedMathPowerAndPushed = 'true';
+    equalsWasClicked = 'false';
   }
 
   if (operator === '.') {
@@ -456,6 +498,19 @@ buttonBackspace.onclick = () => {
       powersYorRootsNLengthMemory.pop();
       powersXYorRootsLengthMemory.pop();
       rootsNumberValueLengthMemory.pop();
+      const openingSuperscript = '<sup>';
+      const openingSuperscriptDetection = displayValue.slice(
+        -openingSuperscript.length
+      );
+      if (openingSuperscript === openingSuperscriptDetection) {
+        console.log('SUP DELETE');
+        displayValue = displayValue.slice(
+          0,
+          displayValue.length - openingSuperscript.length
+        );
+        pendingPowerOrRootNumber = [];
+        pendingValue = [];
+      }
     } else {
       displayValue = displayValue.slice(0, displayValue.length - 1);
     }
@@ -463,35 +518,32 @@ buttonBackspace.onclick = () => {
   } else {
     displayValue = displayValue.slice(0, displayValue.length - 1);
   }
-  saveDisplayValueForPowerYOrRootN = 0;
+
+  pendingValue.pop();
+  pendingPowerOrRootNumber.pop();
+  savePower = 'false';
+  saveRootNumber = 'false';
+  rootN = [];
+  saveNAndRootNumber = 'false';
+
   if (displayValue === '') {
-    displayResult = 0;
+    initialConfiguration();
   }
   performOutputOperation();
+
+  console.log(pendingValue);
   console.log(displayValue);
   console.log(calculationsZone);
   console.log(powersX2orSquareRootsLengthMemory);
-  console.log(squareRootsNumberValueLengthMemory);
   console.log(powersXYorRootsLengthMemory);
   console.log(powersYorRootsNLengthMemory);
   console.log(rootsNumberValueLengthMemory);
-  console.log(saveDisplayValueForPowerYOrRootN + 'X');
+  console.log(squareRootsNumberValueLengthMemory);
 };
 
 buttonClear.onclick = () => {
-  displayResult = 0;
-  displayValue = '';
+  initialConfiguration();
   performOutputOperation();
-  saveNumber = 'false';
-  savePower = 'false';
-  saveRootNumber = 'false';
-  saveNAndRootNumber = 'false';
-  closingParenthesis = 'false';
-  powerOrRootNumber = [];
-  rootN = [];
-  pendingPowerOrRootNumber = [];
-  pendingValue = [];
-  calculationsZone = [];
 };
 
 buttonEquals.onclick = () => {

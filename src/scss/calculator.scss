@@ -3,6 +3,27 @@
   margin: 10px auto 0 auto;
 }
 
+.calculator__exchange {
+  position: absolute;
+  z-index: 1;
+  height: 448px;
+  width: 250px;
+  background: steelblue;
+
+  .calculator__exchange-list {
+  padding: 15px 15px;
+  list-style: none;
+
+    li {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.calculator-wrapper {
+  position: relative;
+}
+
 .calculator__output-operation {
   background-color: grey;
   margin: 0 6px 20px 6px;
