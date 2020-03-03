@@ -1,8 +1,3 @@
-var outputOperationValue = document.querySelector(
-  '#calculator__output-operation-value'
-);
-var displayValue = '';
-
 const url = 'http://api.nbp.pl/api/exchangerates/tables/a/';
 const exchangeRates = async () => {
   try {

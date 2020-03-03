@@ -3,25 +3,6 @@
   margin: 10px auto 0 auto;
 }
 
-.calculator__exchange-rates {
-  position: absolute;
-  z-index: 1;
-  overflow-y: scroll;
-  height: 448px;
-  width: 230px;
-  background: steelblue;
-
-  .calculator__exchange-rates-list {
-  padding: 15px 15px;
-  list-style: none;
-
-    li {
-      margin-bottom: 10px;
-      cursor: pointer;
-    }
-  }
-}
-
 .calculator__output-operation {
   background-color: grey;
   margin: 0 6px 20px 6px;
@@ -50,8 +31,4 @@
     font-weight: bold;
     font-size: 18px;
   }
-}
-
-.superscript {
-  font-size: 12px;
 }

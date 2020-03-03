@@ -4,7 +4,8 @@
     "rules": {
         "prettier/prettier": "warn",
         "default-case": "off",
-        "no-eval":"off"
+        "no-eval":"off",
+        "no-undef":"off"
     },
     "parserOptions": {
         "ecmaVersion": 2015,
