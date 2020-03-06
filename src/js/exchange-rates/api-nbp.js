@@ -1,4 +1,4 @@
-const url = 'http://api.nbp.pl/api/exchangerates/tables/a/';
+const url = 'https://api.nbp.pl/api/exchangerates/tables/a/';
 const exchangeRates = async () => {
   try {
     const response = await fetch(url);
