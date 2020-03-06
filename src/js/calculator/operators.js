@@ -1,5 +1,6 @@
 import { performMathPowerAndPush } from './math-power.js';
 import { performMathRootAndPush } from './math-root.js';
+import {convertACurrency} from '../exchange-rates/api-nbp.js';
 
 let performOperation = itemClicked => {
   let operator = itemClicked.target.innerText;
@@ -14,6 +15,7 @@ let performOperation = itemClicked => {
     displayValue += operator;
     calculationsZone.push(operator);
     if (operator === ')') {
+      convertACurrency();
       closingParenthesis = 'true';
     }
   }
@@ -31,7 +33,8 @@ let performOperation = itemClicked => {
       saveNumber === 'false' &&
       (savePower === 'true' ||
         saveRootNumber === 'true' ||
-        saveNAndRootNumber === 'true')
+        saveNAndRootNumber === 'true' ||
+        valueToBeConverted === 'true')
     ) {
       calculationsZone.pop();
     }
@@ -43,6 +46,7 @@ let performOperation = itemClicked => {
     saveRootNumber = 'false';
     saveNAndRootNumber = 'false';
     closingParenthesis = 'false';
+    valueToBeConverted = 'false';
     if (operator === '*') {
       operator = '×';
     } else if (operator === '/') {

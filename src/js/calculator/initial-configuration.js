@@ -9,8 +9,10 @@ const initialConfiguration = () => {
   equalsWasClicked = 'false';
   performedMathPowerAndPushed = 'false';
   performedSquareRootAndPushed = 'false';
+  valueToBeConverted = 'false';
   openingParethesis = false;
   saveDisplayValueForPowerYOrRootN = '';
+  rateMid = '';
   powerOrRootNumber = [];
   rootN = [];
   pendingPowerOrRootNumber = [];

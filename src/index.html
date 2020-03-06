@@ -12,7 +12,11 @@
 
   <section class="calculator">
     <div class="calculator__container">
-      <div class="calculator__exchange-rates">
+      <div class="calculator__exchange-rates" id="calculator__exchange-rates">
+        <div class="calculator__exchange-rates-button-close">
+          <i class="calculator__exchange-rates-button-close-icon fas fa-times"
+            id="calculator__exchange-rates-button-close-icon"></i>
+        </div>
         <ul class="calculator__exchange-rates-list" id="calculator__exchange-rates-list"></ul>
       </div>
       <div class="calculator-wrapper">
@@ -21,7 +25,7 @@
           <p class="calculator__output-operation-result" id="calculator__output-operation-result"></p>
         </div>
         <div class="calculator__input-operation">
-          <button class="calculator__input-operation-value">
+          <button class="calculator__input-operation-value" id="calculator__input-operation-value-exchange-rates">
             PLN
           </button>
           <button class="calculator__input-operation-value" id="calculator__input-operation-value-clear">

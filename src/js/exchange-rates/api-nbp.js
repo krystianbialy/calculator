@@ -23,11 +23,38 @@ exchangeRates()
       return currency.addEventListener('click', () => {
         rates.map(rate => {
           if (rate.currency === currency.innerHTML) {
-            displayValue += rate.code;
-            displayValue += '(';
+            displayValue += rate.code + '(';
             outputOperationValue.innerHTML = displayValue;
+            rateMid = rate.mid;
+            valueToBeConverted = 'true';
           }
         })
       })
     });
   })
+
+  const convertACurrency = () => {
+     if (valueToBeConverted === 'true' && saveNumber === 'false') {
+       calculationsZone = [];
+       openingParethesis = displayValue.slice(0, 1).includes('(');
+       if (openingParethesis === true) {
+        calculationsZone.push('(');
+       }
+       const valueEntered = displayValue.match(/[0-9]/g).join('');
+       calculationsZone.push('(' + rateMid * valueEntered + ')' );
+       if (openingParethesis === true) {
+        calculationsZone.push(')');
+       }
+       console.log(valueEntered);
+       console.log(calculationsZone);
+     }
+
+     if (valueToBeConverted === 'true' && saveNumber === 'true' ) {
+      calculationsZone.splice(-pendingValue.length - 1);
+      calculationsZone.push('(' + rateMid * pendingValue.join('') + ')' );
+      console.log(pendingValue);
+      console.log(calculationsZone);
+     }
+  }
+
+  export {convertACurrency};

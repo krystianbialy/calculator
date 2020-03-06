@@ -3,12 +3,32 @@ import { performMathRootAndPush } from './math-root.js';
 import { performOutputOperation } from './output-operation.js';
 
 buttonEquals.onclick = () => {
+  var displayValueLetterTest;
   performMathPowerAndPush();
   performMathRootAndPush();
   console.log(calculationsZone);
-  const resultOfTheAction = eval(calculationsZone.join(''));
   displayValue += '=';
-  displayResult = resultOfTheAction;
+  const resultOfTheAction = eval(calculationsZone.join(''));
+  const addingStringToResult = resultOfTheAction + '';
+  const dotDetection = addingStringToResult.includes('.');
+  const displayValueMatch = displayValue.match(/[A-Z]/g);
+  console.log(displayValueMatch);
+  if (displayValueMatch !== null) {
+    displayValueLetterTest = /^[A-Z]+$/.test(displayValueMatch.join(''));
+    console.log(displayValueLetterTest);
+  } else {
+    displayValueLetterTest = false;
+    console.log(displayValueLetterTest);
+  }
+  if (dotDetection === true && displayValueLetterTest === false) {
+    displayResult = resultOfTheAction.toFixed(2);
+  } else if (dotDetection === true && displayValueLetterTest === true) {
+    displayResult = resultOfTheAction.toFixed(2) + 'PLN';
+  } else if (dotDetection === false && displayValueLetterTest === true) {
+    displayResult = resultOfTheAction + 'PLN';
+  } else {
+    displayResult = resultOfTheAction;
+  }
   performOutputOperation();
   equalsWasClicked = 'true';
 };
