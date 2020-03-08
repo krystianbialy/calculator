@@ -4,7 +4,7 @@
 }
 
 .calculator__output-operation {
-  background-color: grey;
+  background-color: #000;
   margin: 0 6px 20px 6px;
   height: 100px;
   color: #fff;
@@ -31,5 +31,49 @@
     font-weight: bold;
     font-size: 18px;
     cursor: pointer;
+    border: none;
+
+    &::-moz-focus-inner {
+      border: none;
+    }
+  }
+
+  .calculator__input-operation-value--operator {
+    background: #2A4B7C;
+    color: #fff;
+  }
+
+  .calculator__input-operation-value--number,
+  .calculator__input-operation-value--number-color {
+    background: #577284;
+    color: #fff;
+  }
+
+  .calculator__input-operation-value--equals-color {
+    background: #228B22;
+    color: #fff;
+  }
+
+  .calculator__input-operation-value--clear-color,
+  .calculator__input-operation-value--backspace-color {
+    background: #9B2335;
+    color: #fff;
+  }
+
+  .calculator__input-operation-value--exchange-rates-color {
+    background: #008080;
+    color: #fff;
+  }
+}
+
+@media (min-width: 620px) {
+  .calculator__container {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: center;
+
+    .calculator-wrapper {
+      width: 370px;
+    }
   }
 }

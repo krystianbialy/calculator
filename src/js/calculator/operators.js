@@ -1,6 +1,6 @@
 import { performMathPowerAndPush } from './math-power.js';
 import { performMathRootAndPush } from './math-root.js';
-import {convertACurrency} from '../exchange-rates/api-nbp.js';
+import { convertACurrency } from '../exchange-rates/convert-a-currency.js';
 
 let performOperation = itemClicked => {
   let operator = itemClicked.target.innerText;
@@ -15,7 +15,6 @@ let performOperation = itemClicked => {
     displayValue += operator;
     calculationsZone.push(operator);
     if (operator === ')') {
-      convertACurrency();
       closingParenthesis = 'true';
     }
   }
@@ -28,6 +27,7 @@ let performOperation = itemClicked => {
   ) {
     performMathPowerAndPush();
     performMathRootAndPush();
+    convertACurrency();
     if (
       openingParethesis === true &&
       saveNumber === 'false' &&
@@ -115,6 +115,7 @@ let performOperation = itemClicked => {
 
   if (operator === '.') {
     displayValue += operator;
+    pendingValue.push(operator);
     calculationsZone.push(operator);
   }
 

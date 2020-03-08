@@ -1,11 +1,13 @@
 import { performMathPowerAndPush } from './math-power.js';
 import { performMathRootAndPush } from './math-root.js';
 import { performOutputOperation } from './output-operation.js';
+import { convertACurrency } from '../exchange-rates/convert-a-currency.js';
 
 buttonEquals.onclick = () => {
   var displayValueLetterTest;
   performMathPowerAndPush();
   performMathRootAndPush();
+  convertACurrency();
   console.log(calculationsZone);
   displayValue += '=';
   const resultOfTheAction = eval(calculationsZone.join(''));

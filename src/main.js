@@ -18,5 +18,7 @@ import './js/calculator/button-backspace.js';
 import './js/calculator/button-clear.js';
 import './js/calculator/button-equals';
 import './js/exchange-rates/api-nbp.js';
+import './js/exchange-rates/convert-a-currency.js';
 import './js/exchange-rates/open-list.js';
 import './js/exchange-rates/close-list.js';
+import './js/footer/footer.js';
