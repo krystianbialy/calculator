@@ -5,7 +5,7 @@ const convertACurrency = () => {
     if (openingParethesis === true) {
       calculationsZone.push('(');
     }
-    const valueEntered = displayValue.match(/[0-9]/g).join('');
+    const valueEntered = displayValue.match(/[0-9.]/g).join('');
     calculationsZone.push('(' + rateMid * valueEntered + ')');
     if (openingParethesis === true) {
       calculationsZone.push(')');

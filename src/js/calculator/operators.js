@@ -61,13 +61,14 @@ let performOperation = itemClicked => {
     calculationsZone.push(operator);
   }
 
-  if (operator === 'x2' && saveNumber === 'false') {
-    /*
-      if (displayValue === '' || displayValue === '(') {
-        displayValue = '0';
-      }
-      TWO WAYS
-      */
+  const lastElementOfValue = displayValue.slice(-1);
+  const lastElementOfValueTest = /^[0-9]+$/.test(lastElementOfValue);
+
+  if (
+    operator === 'x2' &&
+    saveNumber === 'false' &&
+    lastElementOfValueTest === true
+  ) {
     let saveDisplayValueForPowerX2 = displayValue;
     displayValue += '2'.sup();
     calculationsZone = [];
@@ -80,7 +81,11 @@ let performOperation = itemClicked => {
     const valueAndPowerToMemory = saveDisplayValueForPowerX2 + 1;
     powersX2orSquareRootsLengthMemory.push(valueAndPowerToMemory.length);
     console.log(powersX2orSquareRootsLengthMemory);
-  } else if (operator === 'x2' && saveNumber === 'true') {
+  } else if (
+    operator === 'x2' &&
+    saveNumber === 'true' &&
+    lastElementOfValueTest === true
+  ) {
     displayValue += '2'.sup();
     calculationsZone.splice(-pendingValue.length);
     calculationsZone.push(Math.pow(pendingValue.join(''), 2));
@@ -88,11 +93,16 @@ let performOperation = itemClicked => {
     console.log(powersX2orSquareRootsLengthMemory);
   }
 
-  if (operator === 'xy') {
+  if (operator === 'xy' && lastElementOfValueTest === true) {
     saveDisplayValueForPowerYOrRootN = displayValue;
     savePower = 'true';
     performedMathPowerAndPushed = 'false';
     equalsWasClicked = 'false';
+    for (let i = 0; i < allOperators.length; i += 1) {
+      allOperators[i].style.pointerEvents = 'none';
+    }
+    buttonExchangeRates.style.pointerEvents = 'none';
+    buttonEquals.style.pointerEvents = 'none';
   }
 
   if (operator === '√') {

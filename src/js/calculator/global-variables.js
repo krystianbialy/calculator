@@ -13,6 +13,9 @@ global.buttonClear = document.querySelector(
 global.buttonEquals = document.querySelector(
   '#calculator__input-operation-value-equals'
 );
+global.buttonExchangeRates = document.querySelector(
+  '#calculator__input-operation-value-exchange-rates'
+);
 
 global.outputOperationValue = document.querySelector(
   '#calculator__output-operation-value'
