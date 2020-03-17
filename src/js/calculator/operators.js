@@ -62,12 +62,12 @@ let performOperation = itemClicked => {
   }
 
   const lastElementOfValue = displayValue.slice(-1);
-  const lastElementOfValueTest = /^[0-9]+$/.test(lastElementOfValue);
+  const lastElementOfValueNumberTest = /^[0-9]+$/.test(lastElementOfValue);
 
   if (
     operator === 'x2' &&
     saveNumber === 'false' &&
-    lastElementOfValueTest === true
+    lastElementOfValueNumberTest === true
   ) {
     let saveDisplayValueForPowerX2 = displayValue;
     displayValue += '2'.sup();
@@ -84,7 +84,7 @@ let performOperation = itemClicked => {
   } else if (
     operator === 'x2' &&
     saveNumber === 'true' &&
-    lastElementOfValueTest === true
+    lastElementOfValueNumberTest === true
   ) {
     displayValue += '2'.sup();
     calculationsZone.splice(-pendingValue.length);
@@ -93,7 +93,7 @@ let performOperation = itemClicked => {
     console.log(powersX2orSquareRootsLengthMemory);
   }
 
-  if (operator === 'xy' && lastElementOfValueTest === true) {
+  if (operator === 'xy' && lastElementOfValueNumberTest === true) {
     saveDisplayValueForPowerYOrRootN = displayValue;
     savePower = 'true';
     performedMathPowerAndPushed = 'false';
@@ -105,7 +105,14 @@ let performOperation = itemClicked => {
     buttonEquals.style.pointerEvents = 'none';
   }
 
-  if (operator === '√') {
+  const lastElementOfValueOperatorTest = /^[× ÷ + -]+$/.test(
+    lastElementOfValue
+  );
+
+  if (
+    (operator === '√' && displayValue === '') ||
+    (operator === '√' && lastElementOfValueOperatorTest === true)
+  ) {
     saveRootNumber = 'true';
     displayValue += '√';
     performedSquareRootAndPushed = 'false';
@@ -113,7 +120,7 @@ let performOperation = itemClicked => {
     equalsWasClicked = 'false';
   }
 
-  if (operator === 'n√a') {
+  if (operator === 'n√a' && lastElementOfValueNumberTest === true) {
     saveDisplayValueForPowerYOrRootN = displayValue;
     saveNAndRootNumber = 'true';
     displayValue = displayValue.slice(0, displayValue.length - rootN.length);
@@ -121,6 +128,11 @@ let performOperation = itemClicked => {
     performedSquareRootAndPushed = 'false';
     performedMathPowerAndPushed = 'true';
     equalsWasClicked = 'false';
+    for (let i = 0; i < allOperators.length; i += 1) {
+      allOperators[i].style.pointerEvents = 'none';
+    }
+    buttonExchangeRates.style.pointerEvents = 'none';
+    buttonEquals.style.pointerEvents = 'none';
   }
 
   if (operator === '.') {

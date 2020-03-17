@@ -11,5 +11,9 @@ exchangeRatesButtonClose.onclick = () => {
 };
 
 exchangeRatesListItem.onclick = () => {
-  exchangeRates.style.display = 'none';
+  if (window.innerWidth > 620) {
+    exchangeRates.style.display = 'block';
+  } else {
+    exchangeRates.style.display = 'none';
+  }
 };
