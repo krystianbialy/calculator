@@ -1,0 +1,26 @@
+.change-mode {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    border: 1px solid;
+    border-radius: 50px;
+    margin-top: 1px;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.change-mode__dark {
+    margin: auto;
+
+    .change-mode__dark-icon {
+        font-size: 15px;
+    }
+}
+
+.change-mode-dark-mode {
+    opacity: 1;
+}
+
+.body-dark-mode {
+    background: #808080;
+}

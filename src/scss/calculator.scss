@@ -5,7 +5,7 @@
 
 .calculator__output-operation {
   background-color: #000;
-  margin: 0 6px 20px 6px;
+  margin: 0 6px 6px 6px;
   height: 100px;
   color: #fff;
   text-align: right;
@@ -21,7 +21,7 @@
 .calculator__input-operation {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  margin: 0 6px 0 6px;
+  margin: 6px 6px 0 6px;
   grid-gap: 7px;
 
   .calculator__input-operation-value {
