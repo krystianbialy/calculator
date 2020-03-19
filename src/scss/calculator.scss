@@ -1,11 +1,12 @@
 .calculator__container {
+  position: relative;
   max-width: 370px;
   margin: 10px auto 0 auto;
 }
 
 .calculator__output-operation {
   background-color: #000;
-  margin: 0 6px 6px 6px;
+  margin: 0 5px 6px 5px;
   height: 100px;
   color: #fff;
   text-align: right;
@@ -75,5 +76,11 @@
     .calculator-wrapper {
       width: 370px;
     }
+  }
+}
+
+@media (min-width: 975px) {
+  .calculator__container {
+    grid-template-columns: repeat(3, auto);
   }
 }

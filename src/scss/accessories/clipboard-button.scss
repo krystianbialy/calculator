@@ -1,0 +1,17 @@
+.clipboard-button {
+  margin: 0 16px 0 18px;
+}
+
+.clipboard-button__icon {
+  font-size: 27px;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.clipboard-button-toggle {
+  display: block !important;
+}
+
+.clipboard-button-dark-mode {
+  opacity: 1;
+}

@@ -27,6 +27,9 @@ global.outputOperationResult = document.querySelector(
   '#calculator__output-operation-result'
 );
 
+global.exchangeRates = document.querySelector('#calculator__exchange-rates');
+global.calculatorClipboard = document.querySelector('#calculator__clipboard');
+
 global.displayResult = 0;
 global.displayValue = '';
 global.saveNumber = 'false';

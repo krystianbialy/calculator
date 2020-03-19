@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 
 <head>
   <meta charset="UTF-8">
@@ -32,8 +32,8 @@
               </div>
             </div>
           </div>
-          <div class="clipboard">
-            <div class="clipboard__icon">
+          <div class="clipboard-button" id="clipboard-button">
+            <div class="clipboard-button__icon" id="clipboard-button__icon">
               <i class="far fa-clipboard"></i>
             </div>
           </div>
@@ -120,6 +120,13 @@
             <sup class="superscript">n</sup>√a
           </button>
         </div>
+      </div>
+      <div class="calculator__clipboard" id="calculator__clipboard">
+        <div class="calculator__clipboard-button-close">
+          <i class="calculator__clipboard-button-close-icon fas fa-times"
+            id="calculator__clipboard-button-close-icon"></i>
+        </div>
+        <textarea class="calculator__clipboard-textarea" id="calculator__clipboard-textarea" placeholder="Brudnopis"></textarea>
       </div>
     </div>
   </section>
