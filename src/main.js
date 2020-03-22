@@ -18,12 +18,14 @@ import './js/calculator/button-backspace.js';
 import './js/calculator/button-clear.js';
 import './js/calculator/button-equals';
 
-import './js/accessories/change-mode.js';
+import './js/accessories/change-mode-button.js';
 import './js/accessories/clipboard-button.js';
 
 import './js/exchange-rates/api-nbp.js';
 import './js/exchange-rates/convert-a-currency.js';
 import './js/exchange-rates/open-list.js';
 import './js/exchange-rates/close-list.js';
+
+import './js/clipboard.js';
 
 import './js/footer.js';

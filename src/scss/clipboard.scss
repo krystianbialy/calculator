@@ -8,6 +8,10 @@
     background: #5B5EA6;
 }
 
+.clipboard-icon-wrapper {
+    display: flex;
+}
+
 .calculator__clipboard-button-close-icon {
     margin: 3px 0 6px 0;
     padding: 5px 10px 5px 10px;
@@ -16,19 +20,39 @@
     cursor: pointer;
 }
 
+.calculator__clipboard-cleaning {
+    margin: 4px 10px 6px auto;
+    padding: 5px 10px 5px 10px;
+    font-size: 19px;
+    color: #fff;
+    cursor: pointer;
+}
+
 .calculator__clipboard-textarea {
     height: 277px;
     width: 96%;
+    font-size: 14px;
     margin-left: 7px;
     padding: 5px;
     border: none;
     resize: none;
     overflow-y: scroll;
+
+    &::placeholder {
+        color: #000;
+        font-size: 13px;
+        opacity: 0.7;
+    }
 }
 
 .clipboard-dark-mode {
     background: #778899;
     color: #fff;
+}
+
+.clipboard-textarea-dark-mode::placeholder {
+    color: #fff;
+    opacity: 0.7;
 }
 
 @media (min-width: 975px) {
