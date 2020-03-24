@@ -13,9 +13,18 @@
   <section class="calculator">
     <div class="calculator__container">
       <div class="calculator__exchange-rates" id="calculator__exchange-rates">
-        <div class="calculator__exchange-rates-button-close">
-          <i class="calculator__exchange-rates-button-close-icon fas fa-times"
-            id="calculator__exchange-rates-button-close-icon"></i>
+        <div class="exchange-rates-wrapper">
+          <div class="calculator__exchange-rates-button-close">
+            <i class="calculator__exchange-rates-button-close-icon fas fa-times"
+              id="calculator__exchange-rates-button-close-icon"></i>
+          </div>
+          <div class="calculator__exchange-rates-data-date-information">
+            <p class="calculator__exchange-rates-data-date-information-text">
+              Dane NBP z dnia:
+            </p>
+            <p class="calculator__exchange-rates-data-date-information-api-date"
+              id="calculator__exchange-rates-data-date-information-api-date"></p>
+          </div>
         </div>
         <ul class="calculator__exchange-rates-list" id="calculator__exchange-rates-list"></ul>
       </div>

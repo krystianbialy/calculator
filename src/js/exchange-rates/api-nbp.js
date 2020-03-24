@@ -9,6 +9,15 @@ const exchangeRates = async () => {
   }
 };
 
+const dataDateInformation = document.querySelector(
+  '#calculator__exchange-rates-data-date-information-api-date'
+);
+exchangeRates()
+  .then(table => table[0].effectiveDate)
+  .then(effectiveDate => {
+    dataDateInformation.innerHTML = effectiveDate;
+  });
+
 exchangeRates()
   .then(table => table[0].rates)
   .then(rates => {

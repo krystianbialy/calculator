@@ -19,6 +19,10 @@
     }
 }
 
+.exchange-rates-wrapper {
+    display: flex;
+}
+
 .calculator__exchange-rates-button-close {
     position: sticky;
     top: 0;
@@ -29,6 +33,11 @@
     padding: 12px 15px 10px 15px;
     font-size: 25px;
     cursor: pointer;
+}
+
+.calculator__exchange-rates-data-date-information {
+    font-size: 13px;
+    margin: 10px 5px 0 auto;
 }
 
 @media (min-width: 620px) {
