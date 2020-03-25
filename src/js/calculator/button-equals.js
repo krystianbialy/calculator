@@ -45,7 +45,12 @@ buttonEquals.onclick = () => {
     for (let i = 0; i < allOperators.length; i += 1) {
       allOperators[i].style.pointerEvents = 'none';
     }
-    buttonExchangeRates.style.pointerEvents = 'none';
+    const exchangeRatesListItem = document.querySelectorAll(
+      '.calculator__exchange-rates-list-item'
+    );
+    for (let i = 0; i < exchangeRatesListItem.length; i += 1) {
+      exchangeRatesListItem[i].style.pointerEvents = 'none';
+    }
     buttonEquals.style.pointerEvents = 'none';
   }
 };

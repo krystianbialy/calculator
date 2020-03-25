@@ -5,7 +5,7 @@ import '@fortawesome/fontawesome-free/scss/brands.scss';
 import '@fortawesome/fontawesome-free/scss/solid.scss';
 import '@fortawesome/fontawesome-free/scss/regular.scss';
 
-import './js/calculator/global-variables.js';
+import './js/global-variables.js';
 
 import './js/calculator/initial-configuration.js';
 import './js/calculator/display-result.js';
@@ -20,6 +20,7 @@ import './js/calculator/button-equals';
 
 import './js/accessories/change-mode-button.js';
 import './js/accessories/clipboard-button.js';
+import './js/accessories/information-button.js';
 
 import './js/exchange-rates/api-nbp.js';
 import './js/exchange-rates/convert-a-currency.js';

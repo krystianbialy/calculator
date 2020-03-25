@@ -8,6 +8,7 @@ const exchangeRatesListItem = document.querySelector(
 exchangeRatesButtonClose.onclick = () => {
   exchangeRates.style.display = 'none';
   calculatorClipboard.classList.remove('clipboard-margin');
+  calculatorInformations.classList.remove('informations-margin');
 };
 
 exchangeRatesListItem.onclick = () => {
