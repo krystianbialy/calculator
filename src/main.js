@@ -28,5 +28,6 @@ import './js/exchange-rates/open-list.js';
 import './js/exchange-rates/close-list.js';
 
 import './js/clipboard.js';
+import './js/informations.js';
 
 import './js/footer.js';
