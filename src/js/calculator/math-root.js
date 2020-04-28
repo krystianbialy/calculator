@@ -1,12 +1,12 @@
 const performMathRootAndPush = () => {
   if (saveRootNumber === 'true' && saveNumber === 'false') {
     calculationsZone = [];
-    openingParethesis = displayValue.includes('(');
-    if (openingParethesis === true) {
+    openingParenthesis = displayValue.includes('(');
+    if (openingParenthesis === true) {
       calculationsZone.push('(');
     }
     calculationsZone.push(Math.sqrt(pendingPowerOrRootNumber.join('')));
-    if (openingParethesis === true) {
+    if (openingParenthesis === true) {
       calculationsZone.push(')');
     }
     powersX2orSquareRootsLengthMemory.push(pendingPowerOrRootNumber.length + 1);
@@ -14,8 +14,8 @@ const performMathRootAndPush = () => {
     console.log(powersX2orSquareRootsLengthMemory);
   } else if (saveNAndRootNumber === 'true' && saveNumber === 'false') {
     calculationsZone = [];
-    openingParethesis = saveDisplayValueForPowerYOrRootN.includes('(');
-    if (openingParethesis === true) {
+    openingParenthesis = saveDisplayValueForPowerYOrRootN.includes('(');
+    if (openingParenthesis === true) {
       saveDisplayValueForPowerYOrRootN = saveDisplayValueForPowerYOrRootN.replace(
         '(',
         ''
@@ -28,7 +28,7 @@ const performMathRootAndPush = () => {
         1 / saveDisplayValueForPowerYOrRootN
       )
     );
-    if (openingParethesis === true) {
+    if (openingParenthesis === true) {
       calculationsZone.push(')');
     }
     powersXYorRootsLengthMemory.push(pendingPowerOrRootNumber.length + 1);

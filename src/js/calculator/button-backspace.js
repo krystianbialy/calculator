@@ -16,32 +16,36 @@ buttonBackspace.onclick = () => {
   }
   const equals = displayValue.includes('=');
   if (equals === false) {
-    const superscript = '<sup></sup>';
-    const closingSuperscript = '</sup>';
-    const closingSuperscriptDetection = displayValue.slice(
-      -closingSuperscript.length
+    const superscriptTag = '<sup></sup>';
+    const closingSuperscriptTag = '</sup>';
+    const closingSuperscriptTagDetection = displayValue.slice(
+      -closingSuperscriptTag.length
     );
-    const powerXY = '<powerxy>';
-    const powerXYDetection = displayValue.slice(-powerXY.length);
-    const squareRoot = '<squareroot>';
-    const squareRootDetection = displayValue.slice(-squareRoot.length);
-    const root = '<root>';
-    const rootDetection = displayValue.slice(-root.length);
-    if (closingSuperscript === closingSuperscriptDetection) {
+    const powerXyTag = '<powerxy>';
+    const powerXyTagDetection = displayValue.slice(-powerXyTag.length);
+    const squareRootTag = '<squareroot>';
+    const squareRootTagDetection = displayValue.slice(-squareRootTag.length);
+    const rootTag = '<root>';
+    const rootTagDetection = displayValue.slice(-rootTag.length);
+    const exchangeRatesTag = '<exchangeRates>';
+    const exchangeRatesTagDetection = displayValue.slice(
+      -exchangeRatesTag.length
+    );
+    if (closingSuperscriptTag === closingSuperscriptTagDetection) {
       const powersX2MemoryLastValue =
         powersX2orSquareRootsLengthMemory[
           powersX2orSquareRootsLengthMemory.length - 1
         ];
       displayValue = displayValue.slice(
         0,
-        displayValue.length - superscript.length
+        displayValue.length - superscriptTag.length
       );
       displayValue = displayValue.slice(
         0,
         displayValue.length - powersX2MemoryLastValue
       );
       powersX2orSquareRootsLengthMemory.pop();
-    } else if (powerXY === powerXYDetection) {
+    } else if (powerXyTag === powerXyTagDetection) {
       const powersXYMemoryLastValue =
         powersXYorRootsLengthMemory[powersXYorRootsLengthMemory.length - 1];
       const powersYMemoryLastValue =
@@ -49,8 +53,8 @@ buttonBackspace.onclick = () => {
       displayValue = displayValue.slice(
         0,
         displayValue.length -
-          superscript.length * powersYMemoryLastValue -
-          powerXY.length * powersYMemoryLastValue
+          superscriptTag.length * powersYMemoryLastValue -
+          powerXyTag.length * powersYMemoryLastValue
       );
       displayValue = displayValue.slice(
         0,
@@ -58,7 +62,7 @@ buttonBackspace.onclick = () => {
       );
       powersXYorRootsLengthMemory.pop();
       powersYorRootsNLengthMemory.pop();
-    } else if (squareRoot === squareRootDetection) {
+    } else if (squareRootTag === squareRootTagDetection) {
       const squareRootsMemoryLastValue =
         powersX2orSquareRootsLengthMemory[
           powersX2orSquareRootsLengthMemory.length - 1
@@ -70,7 +74,7 @@ buttonBackspace.onclick = () => {
       displayValue = displayValue.slice(
         0,
         displayValue.length -
-          squareRoot.length * squareRootsNumberValueMemoryLastValue
+          squareRootTag.length * squareRootsNumberValueMemoryLastValue
       );
       displayValue = displayValue.slice(
         0,
@@ -78,7 +82,7 @@ buttonBackspace.onclick = () => {
       );
       powersX2orSquareRootsLengthMemory.pop();
       squareRootsNumberValueLengthMemory.pop();
-    } else if (root === rootDetection) {
+    } else if (rootTag === rootTagDetection) {
       const rootsNMemoryLastValue =
         powersYorRootsNLengthMemory[powersYorRootsNLengthMemory.length - 1];
       const rootsMemoryLastValue =
@@ -89,13 +93,13 @@ buttonBackspace.onclick = () => {
         0,
         displayValue.length -
           rootsMemoryLastValue -
-          root.length * rootsNumberValueMemoryLastValue
+          rootTag.length * rootsNumberValueMemoryLastValue
       );
       displayValue = displayValue.slice(
         0,
         displayValue.length -
           rootsNMemoryLastValue -
-          superscript.length * rootsNMemoryLastValue
+          superscriptTag.length * rootsNMemoryLastValue
       );
       powersYorRootsNLengthMemory.pop();
       powersXYorRootsLengthMemory.pop();
@@ -113,6 +117,21 @@ buttonBackspace.onclick = () => {
         pendingPowerOrRootNumber = [];
         pendingValue = [];
       }
+    } else if (exchangeRatesTag === exchangeRatesTagDetection) {
+      const exchangeRatesSkeleton = 'XYZ()';
+      const exchangeRatesValueLengthMemoryLastValue =
+        exchangeRatesValueLengthMemory[
+          exchangeRatesValueLengthMemory.length - 1
+        ];
+      displayValue = displayValue.slice(
+        0,
+        displayValue.length -
+          exchangeRatesTag.length -
+          exchangeRatesValueLengthMemoryLastValue -
+          exchangeRatesSkeleton.length
+      );
+      exchangeRatesValueLengthMemory.pop();
+      console.log(exchangeRatesValueLengthMemoryLastValue);
     } else {
       displayValue = displayValue.slice(0, displayValue.length - 1);
     }

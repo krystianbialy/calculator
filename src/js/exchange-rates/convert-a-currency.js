@@ -1,30 +1,33 @@
-const convertACurrency = () => {
+import { convertACurrencyServices } from './convert-a-currency-services';
+
+export const convertACurrency = () => {
   if (valueToBeConverted === 'true' && saveNumber === 'false') {
+    exchangeRatesValueLengthMemory.push(calculationsZone.length);
     calculationsZone = [];
-    openingParethesis = displayValue.slice(0, 1).includes('(');
-    if (openingParethesis === true) {
+    openingParenthesis = displayValue.slice(0, 1).includes('(');
+    if (openingParenthesis === true) {
       calculationsZone.push('(');
     }
     const valueEntered = displayValue.match(/[0-9.]/g).join('');
     calculationsZone.push('(' + rateMid * valueEntered + ')');
-    if (openingParethesis === true) {
+    convertACurrencyServices();
+    if (openingParenthesis === true) {
       calculationsZone.push(')');
     }
     console.log(valueEntered);
     console.log(calculationsZone);
+    console.log(exchangeRatesValueLengthMemory);
   }
 
   if (valueToBeConverted === 'true' && saveNumber === 'true') {
-    let test = displayValue.slice(-1);
-    console.log(test);
-    calculationsZone.splice(-pendingValue.length - 1);
+    calculationsZone.splice(-pendingValue.length);
     calculationsZone.push('(' + rateMid * pendingValue.join('') + ')');
-    if (openingParethesis === true) {
+    convertACurrencyServices();
+    exchangeRatesValueLengthMemory.push(pendingValue.length);
+    if (openingParenthesis === true) {
       calculationsZone.push(')');
     }
     console.log(pendingValue);
     console.log(calculationsZone);
   }
 };
-
-export { convertACurrency };

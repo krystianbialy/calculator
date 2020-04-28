@@ -16,6 +16,10 @@ let performOperation = itemClicked => {
     calculationsZone.push(operator);
     if (operator === ')') {
       closingParenthesis = 'true';
+      if (valueToBeConverted === 'true') {
+        displayValue += '<exchangeRates>';
+        calculationsZone.pop();
+      }
     }
   }
 
@@ -29,7 +33,7 @@ let performOperation = itemClicked => {
     performMathRootAndPush();
     convertACurrency();
     if (
-      openingParethesis === true &&
+      openingParenthesis === true &&
       saveNumber === 'false' &&
       (savePower === 'true' ||
         saveRootNumber === 'true' ||
@@ -72,8 +76,8 @@ let performOperation = itemClicked => {
     let saveDisplayValueForPowerX2 = displayValue;
     displayValue += '2'.sup();
     calculationsZone = [];
-    openingParethesis = saveDisplayValueForPowerX2.includes('(');
-    if (openingParethesis === true) {
+    openingParenthesis = saveDisplayValueForPowerX2.includes('(');
+    if (openingParenthesis === true) {
       saveDisplayValueForPowerX2 = saveDisplayValueForPowerX2.replace('(', '');
       calculationsZone.push('(');
     }

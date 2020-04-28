@@ -10,7 +10,7 @@ const initialConfiguration = () => {
   performedMathPowerAndPushed = 'false';
   performedSquareRootAndPushed = 'false';
   valueToBeConverted = 'false';
-  openingParethesis = false;
+  openingParenthesis = false;
   saveDisplayValueForPowerYOrRootN = '';
   rateMid = '';
   powerOrRootNumber = [];

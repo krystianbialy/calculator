@@ -1,8 +1,8 @@
 const performMathPowerAndPush = () => {
   if (savePower === 'true' && saveNumber === 'false') {
     calculationsZone = [];
-    openingParethesis = saveDisplayValueForPowerYOrRootN.includes('(');
-    if (openingParethesis === true) {
+    openingParenthesis = saveDisplayValueForPowerYOrRootN.includes('(');
+    if (openingParenthesis === true) {
       saveDisplayValueForPowerYOrRootN = saveDisplayValueForPowerYOrRootN.replace(
         '(',
         ''
@@ -15,7 +15,7 @@ const performMathPowerAndPush = () => {
         pendingPowerOrRootNumber.join('')
       )
     );
-    if (openingParethesis === true) {
+    if (openingParenthesis === true) {
       calculationsZone.push(')');
     }
     powersXYorRootsLengthMemory.push(
