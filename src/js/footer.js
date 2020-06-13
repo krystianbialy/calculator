@@ -1,7 +1,5 @@
-const getDate = () => {
-  const today = new Date();
-  const year = today.getFullYear();
-  document.querySelector('#footer__date').innerHTML = year;
-};
+import { getDate } from './date';
 
-getDate();
+const element = '#footer__date';
+
+getDate(element);

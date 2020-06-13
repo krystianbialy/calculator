@@ -9,26 +9,25 @@ buttonEquals.onclick = () => {
     performMathPowerAndPush();
     performMathRootAndPush();
     convertACurrency();
-    console.log(calculationsZone);
     displayValue += '=';
     const resultOfTheAction = eval(calculationsZone.join(''));
     const addingStringToResult = resultOfTheAction + '';
     const dotDetection = addingStringToResult.includes('.');
     const displayValueMatch = displayValue.match(/[A-Z]/g);
-    console.log(displayValueMatch);
     if (displayValueMatch !== null) {
       displayValueLetterTest = /^[A-Z]+$/.test(displayValueMatch.join(''));
-      console.log(displayValueLetterTest);
     } else {
       displayValueLetterTest = false;
-      console.log(displayValueLetterTest);
     }
     if (dotDetection === true && displayValueLetterTest === false) {
       displayResult = resultOfTheAction.toFixed(2);
     } else if (dotDetection === true && displayValueLetterTest === true) {
-      displayResult = resultOfTheAction.toFixed(2) + 'PLN';
+      displayResult =
+        resultOfTheAction.toFixed(2) +
+        '<span class="pln-shortcut-style">PLN</span>';
     } else if (dotDetection === false && displayValueLetterTest === true) {
-      displayResult = resultOfTheAction + 'PLN';
+      displayResult =
+        resultOfTheAction + '<span class="pln-shortcut-style">PLN</span>';
     } else {
       displayResult = resultOfTheAction;
     }

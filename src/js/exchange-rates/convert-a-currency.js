@@ -14,9 +14,6 @@ export const convertACurrency = () => {
     if (openingParenthesis === true) {
       calculationsZone.push(')');
     }
-    console.log(valueEntered);
-    console.log(calculationsZone);
-    console.log(exchangeRatesValueLengthMemory);
   }
 
   if (valueToBeConverted === 'true' && saveNumber === 'true') {
@@ -27,7 +24,5 @@ export const convertACurrency = () => {
     if (openingParenthesis === true) {
       calculationsZone.push(')');
     }
-    console.log(pendingValue);
-    console.log(calculationsZone);
   }
 };

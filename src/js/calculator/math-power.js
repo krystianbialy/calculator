@@ -22,8 +22,6 @@ const performMathPowerAndPush = () => {
       saveDisplayValueForPowerYOrRootN.length + pendingPowerOrRootNumber.length
     );
     powersYorRootsNLengthMemory.push(pendingPowerOrRootNumber.length);
-    console.log(powersXYorRootsLengthMemory);
-    console.log(powersYorRootsNLengthMemory);
   }
 
   if (
@@ -40,7 +38,6 @@ const performMathPowerAndPush = () => {
       pendingValue.length + pendingPowerOrRootNumber.length
     );
     powersYorRootsNLengthMemory.push(pendingPowerOrRootNumber.length);
-    console.log(powersXYorRootsLengthMemory);
   }
 
   if (
@@ -58,7 +55,6 @@ const performMathPowerAndPush = () => {
       pendingValue.length + pendingPowerOrRootNumber.length
     );
     powersYorRootsNLengthMemory.push(pendingPowerOrRootNumber.length);
-    console.log(powersXYorRootsLengthMemory);
   }
 };
 

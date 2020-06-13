@@ -84,7 +84,6 @@ let performOperation = itemClicked => {
     calculationsZone.push(Math.pow(saveDisplayValueForPowerX2, 2));
     const valueAndPowerToMemory = saveDisplayValueForPowerX2 + 1;
     powersX2orSquareRootsLengthMemory.push(valueAndPowerToMemory.length);
-    console.log(powersX2orSquareRootsLengthMemory);
   } else if (
     operator === 'x2' &&
     saveNumber === 'true' &&
@@ -94,7 +93,6 @@ let performOperation = itemClicked => {
     calculationsZone.splice(-pendingValue.length);
     calculationsZone.push(Math.pow(pendingValue.join(''), 2));
     powersX2orSquareRootsLengthMemory.push(pendingValue.length + 1);
-    console.log(powersX2orSquareRootsLengthMemory);
   }
 
   if (operator === 'xy' && lastElementOfValueNumberTest === true) {

@@ -4,8 +4,9 @@
     "rules": {
         "prettier/prettier": "warn",
         "default-case": "off",
-        "no-eval":"off",
-        "no-undef":"off"
+        "no-eval": "off",
+        "no-undef": "off",
+        "no-unused-vars": "off"
     },
     "parserOptions": {
         "parser": "babel-eslint",

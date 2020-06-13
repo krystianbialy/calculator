@@ -109,7 +109,6 @@ buttonBackspace.onclick = () => {
         -openingSuperscript.length
       );
       if (openingSuperscript === openingSuperscriptDetection) {
-        console.log('SUP DELETE');
         displayValue = displayValue.slice(
           0,
           displayValue.length - openingSuperscript.length
@@ -131,7 +130,6 @@ buttonBackspace.onclick = () => {
           exchangeRatesSkeleton.length
       );
       exchangeRatesValueLengthMemory.pop();
-      console.log(exchangeRatesValueLengthMemoryLastValue);
     } else {
       displayValue = displayValue.slice(0, displayValue.length - 1);
     }
@@ -167,13 +165,4 @@ buttonBackspace.onclick = () => {
     }
     buttonEquals.style.pointerEvents = 'auto';
   }
-
-  console.log(pendingValue);
-  console.log(displayValue);
-  console.log(calculationsZone);
-  console.log(powersX2orSquareRootsLengthMemory);
-  console.log(powersXYorRootsLengthMemory);
-  console.log(powersYorRootsNLengthMemory);
-  console.log(rootsNumberValueLengthMemory);
-  console.log(squareRootsNumberValueLengthMemory);
 };

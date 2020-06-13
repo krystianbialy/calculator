@@ -36,15 +36,6 @@ let enterANumber = itemClicked => {
   }
   buttonExchangeRates.style.pointerEvents = 'auto';
   buttonEquals.style.pointerEvents = 'auto';
-
-  console.log(pendingValue);
-  console.log(displayValue);
-  console.log(calculationsZone);
-  console.log(powersX2orSquareRootsLengthMemory);
-  console.log(powersXYorRootsLengthMemory);
-  console.log(powersYorRootsNLengthMemory);
-  console.log(rootsNumberValueLengthMemory);
-  console.log(squareRootsNumberValueLengthMemory);
 };
 
 for (let i = 0; i < allNumbers.length; i += 1) {
